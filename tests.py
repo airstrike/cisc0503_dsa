@@ -101,16 +101,16 @@ class BufferArrayMain(unittest.TestCase):
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 2 8 \n")
 
-    def test_fastRemove(self):
-        self.assertEqual(self.buffer.fastRemove(5), False)
-        self.assertEqual(self.buffer.fastRemove(9), True)
+    def test_oldRemove(self):
+        self.assertEqual(self.buffer.oldRemove(5), False)
+        self.assertEqual(self.buffer.oldRemove(9), True)
         self.assertEqual(self.buffer.locationOf(9), -1)
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 8 2 \n")
 
-    def test_fastStableRemove(self):
-        self.assertEqual(self.buffer.fastStableRemove(5), False)
-        self.assertEqual(self.buffer.fastStableRemove(9), True)
+    def test_oldStableRemove(self):
+        self.assertEqual(self.buffer.oldStableRemove(5), False)
+        self.assertEqual(self.buffer.oldStableRemove(9), True)
         self.assertEqual(self.buffer.locationOf(9), -1)
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 2 8 \n")

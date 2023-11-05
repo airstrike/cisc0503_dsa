@@ -39,7 +39,7 @@ from cisc0503_dsa import buffer
 To run the tests, you can use the following command:
 
 ```
-python -m unittest tests.tests
+python -m unittest tests
 ```
 
 ## Assignments
