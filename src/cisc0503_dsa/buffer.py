@@ -1,12 +1,3 @@
-# CISC 503 Data Structures and Algorithms • Fall 2023
-# Assignment #1
-# Author: Andy Terra 
-# Date: 10/29/2023
-
-# Documentation can be be generated with the following commands:
-#  pip install pdoc3
-#  pdoc --html --force --output-dir ./docs one.py
-
 import unittest
 import sys
 
@@ -226,26 +217,6 @@ class BufferArray:
         self.__numberOfElements += 1
         return True
 
-    def oldRemove(self, target: int) -> bool:
-        """Removes the first instance of target from the buffer,
-        replacing it with the last element in the buffer.
-
-        Args:
-            target (int): The value to remove from the buffer.
-        Returns:
-            bool: True if target was found and removed, False otherwise.
-
-        """
-        if self.__numberOfElements == 0:
-            return False
-        for i in range(self.__BUFFER_SIZE):
-            if self.__intArray[i] == target:
-                self.__intArray[i] = self.__intArray[self.__numberOfElements-1]
-                self.__intArray[self.__numberOfElements-1] = 0
-                self.__numberOfElements -= 1
-                return True
-        return False
-
     def remove(self, target: int) -> bool:
         """Removes the first instance of target from the buffer,
         replacing it with the last element in the buffer.
@@ -263,41 +234,6 @@ class BufferArray:
             return True
         return False
     
-    def oldStableRemove(self, target: int) -> bool:
-        """Removes the first instance of target from the buffer,
-        maintaining the order of the buffer.
-
-        Args:
-            target (int): The value to remove from the buffer.
-        Returns:
-            bool: True if target was found and removed, False otherwise.
-
-        """
-        # if we have no elements to remove, quickly return False
-        # if self.__numberOfElements == 0:
-        #     return False
-
-        # create a new buffer with the same type as self.__intArray
-        # without caring whether it is `collections.UserList` or `list`
-        newArray = type(self.__intArray)()
-
-        i, j = 0, 0
-        result = False
-        for i in range(self.__BUFFER_SIZE):
-            newArray.append(0)
-            value = self.__intArray[i]
-            if value != target and value != 0:
-                newArray[j] = self.__intArray[i]
-                j += 1
-
-        if j == self.__numberOfElements:
-            # then we didn't remove any elements
-            return False
-
-        self.__intArray = newArray
-        self.__numberOfElements = j
-        return True
-
     def stableRemove(self, target: int) -> bool:
         """Removes the first instance of target from the buffer,
         maintaining the order of the buffer.
@@ -323,7 +259,39 @@ class BufferArray:
             return True
         return False
 
+    def _oldRemove(self, target: int) -> bool:
+        if self.__numberOfElements == 0:
+            return False
+        for i in range(self.__BUFFER_SIZE):
+            if self.__intArray[i] == target:
+                self.__intArray[i] = self.__intArray[self.__numberOfElements-1]
+                self.__intArray[self.__numberOfElements-1] = 0
+                self.__numberOfElements -= 1
+                return True
+        return False
 
-if __name__ == '__main__':
-    from tests import run_tests
-    run_tests()
+    def _oldStableRemove(self, target: int) -> bool:
+        # if we have no elements to remove, quickly return False
+        # if self.__numberOfElements == 0:
+        #     return False
+
+        # create a new buffer with the same type as self.__intArray
+        # without caring whether it is `collections.UserList` or `list`
+        newArray = type(self.__intArray)()
+
+        i, j = 0, 0
+        result = False
+        for i in range(self.__BUFFER_SIZE):
+            newArray.append(0)
+            value = self.__intArray[i]
+            if value != target and value != 0:
+                newArray[j] = self.__intArray[i]
+                j += 1
+
+        if j == self.__numberOfElements:
+            # then we didn't remove any elements
+            return False
+
+        self.__intArray = newArray
+        self.__numberOfElements = j
+        return True

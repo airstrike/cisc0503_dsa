@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>src.cisc0503_dsa.buffer API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.cisc0503_dsa.buffer</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import unittest
+import sys
+
+# Assignment #1
+
+# 1.    Create a Python class called BufferArray. It will have an array to hold
+# integers and a variable, called numberOfElements, that records how many values
+# are being stored in the array.
+
+# 2.    Give the BufferArray an integer constant called BUFFER_SIZE and initialize
+# it to 8.
+
+# 3.    Give the BufferArray a variable called numberOfElements and initialize it
+# to 0.
+
+# 4.    Make BUFFER_SIZE, intArray, and numberOfElements private.
+
+# 5.    The BufferArray should have an __init__ which initializes all elements in
+# the Buffer to 0. 
+
+# 6.    Give the BufferArray a method called insert() that takes an integer
+# argument, called value, and returns a Boolean. For starters, just have it
+# return false. 
+
+# 7.    Give the BufferArray a method called remove() that takes an integer
+# argument, called value, and returns a Boolean. For starters, just have it
+# return false. 
+
+# 8.    Give the BufferArray a method called find() that takes an integer argument,
+# called target, and returns a Boolean. For starters, just have it return false.
+
+# 9.    Give the BufferArray a public method called display() that takes no
+# arguments and prints the list. 
+
+# 10.   Give the BufferArray a method called locationOf() that takes an integer
+# argument, called target, and returns an integer. 
+
+# 11.   Write a test driver for your BufferArray class called BufferArrayMain in a
+# different file that tests the insert, display, find, and remove methods. Make
+# the tests fairly thorough. 
+
+def tests():
+    &#34;&#34;&#34;Run the tests for this assignment.
+
+    Tests can be run either in any of the following ways: 
+    
+    1. importing this module and calling this function,
+    2. running this file directly from the command line or IDLE
+    3. running `one_tests.py` from the command line or IDLE
+
+    &#34;&#34;&#34;
+    from tests import BufferArrayMain
+    suite = unittest.TestLoader().loadTestsFromTestCase(BufferArrayMain)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+
+# 12.   Have the insert method add the value argument to the next available space
+# at the end of the array and increment the numberOfElements variable. Then it
+# should return true. If the intArray is already full, it should just return
+# false without doing anything. 
+
+# 13.   Have the locationOf method visit every value in the array. If it finds a
+# value that matches the target argument, it should return its location in the
+# array (its index). If no values in the array match the target, it should
+# return -1. 
+
+# 14.   Have the find method look for the value in the intArray. If a value that
+# was put in the intArray matches the argument target, it should return the
+# value true. If no values that were place in the intArray matches the target,
+# it should return false. Use the locationOf method to implement this behavior. 
+
+# 15.   Have the remove method remove the first array element that matches the
+# target. To do this, it should replace it with the last value in the array, and
+# decrement the numberOfElements count. Then it should return true. If no
+# elements match the target value, it should just return false. 
+
+# 16.   Give the BufferArray class one more method, called stableRemove. Have the
+# stableRemove method remove the first array element that matches the target and
+# decrement the numberOfElements count. Then it should return true. If no
+# elements match the target value, it should just return false. (In data
+# structures, “stable” means that the order is not changed.)
+
+import collections
+
+class BufferArray:
+    __numberOfElements = 0
+    __BUFFER_SIZE = None
+
+    def __init__(self, buffer_size: int = 8):
+        &#34;&#34;&#34;Initialize BufferArray&#34;&#34;&#34;
+        
+        # `collections.UserList` is a Class implementation of the built-in list
+        # data type type. We can use so that we may remove some methods from it
+        # and avoid using those built-in methods, which would defeat the
+        # purpose of the assignment. 
+
+        # Said differently, swapping out the two lines below would work just
+        # fine, except we would not be able to remove methods from the builtin
+        # list object (e.g. `self.__intArray.append = None` would not work).
+        self.__intArray = collections.UserList()
+        # self.__intArray = []
+
+    
+        # Initialize all of the elements in the BufferArray to `0`. We must
+        # run this before removing methods from the list, otherwise we can&#39;t
+        # call `self.__intArray.append(0)`
+        self.__BUFFER_SIZE = buffer_size
+        for i in range(self.__BUFFER_SIZE):
+            self.__intArray.append(0)
+
+        # If we used `collections.UserList()` above, we can now remove the
+        # following methods:
+        if type(self.__intArray) is collections.UserList:
+            self.__intArray.append = None
+            self.__intArray.extend = None
+            self.__intArray.insert = None
+            self.__intArray.remove = None
+            self.__intArray.pop = None
+            self.__intArray.clear = None
+            self.__intArray.count = None
+            self.__intArray.__str__ = None
+
+    def __str__(self):
+        &#34;&#34;&#34;Representation of the BufferArray (as a string)
+        
+        For debugging purposes only, not used anywhere.
+
+        Example in the Python shell:
+        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; b = BufferArray()
+        &gt;&gt;&gt; b.insert(1)
+        True
+        &gt;&gt;&gt; print(b)
+        BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
+        
+        &#34;&#34;&#34;
+        return self.__repr__() # avoid duplicating code
+        # alternatively one could do:
+        # return &#39;%s&#39; % self.display()
+
+    def __repr__(self):
+        &#34;&#34;&#34;Representation of the BufferArray object
+        
+        For debugging purposes only, not used anywhere.
+
+        Example in the Python shell:
+        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; b = BufferArray()
+        &gt;&gt;&gt; b.insert(1)
+        True
+        &gt;&gt;&gt; b
+        BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
+        
+        &#34;&#34;&#34;
+        return f&#39;BufferArray({self.__intArray})&#39;
+
+    def display(self):
+        &#34;&#34;&#34;Displays the contents of the buffer.
+
+        This approach matches that of the `run()` command
+        in the `simple_sort.py` file from the first class.
+
+        One possible improvement would to remove the trailing
+        space at the end of the output, prior to the newline.
+        That isn&#39;t done here since that was not a requirement
+        from the assignment prompt.
+
+        &#34;&#34;&#34;
+        i = 0
+        for n in range(self.__BUFFER_SIZE):
+            if self.__intArray[n] != 0:
+                i += 1
+                print(self.__intArray[n], end=&#34; &#34;) 
+            if i == self.__numberOfElements:
+                break
+        print(&#39;&#39;)
+
+
+    def locationOf(self, target: int) -&gt; int:
+        &#34;&#34;&#34;Returns the index of a value in the buffer.
+
+        Args:
+            target (int): The value to find in the buffer.
+        Returns:
+            int: The index of target in the buffer, or -1 if not found.
+        
+        &#34;&#34;&#34;
+        index = 0
+        for value in self.__intArray:
+            if value == target:
+                return index
+            index += 1
+        return -1
+
+    def find(self, target: int) -&gt; bool:
+        &#34;&#34;&#34;Checks if a value is present in the buffer.
+        
+        Args:
+            target (int): The value to find in the buffer.
+        Returns:
+            bool: True if target was found, False otherwise.
+        
+        &#34;&#34;&#34;
+        return True if self.locationOf(target) != -1 else False
+
+    def insert(self, value: int) -&gt; bool:
+        &#34;&#34;&#34;Inserts a value into the end of the buffer.
+
+        Args:
+            value (int): The value to insert into the buffer.
+        Returns:
+            bool: False if we&#39;re already at capacity, True otherwise.
+
+        &#34;&#34;&#34;
+        if self.__numberOfElements == self.__BUFFER_SIZE:
+            return False
+        self.__intArray[self.__numberOfElements] = value
+        self.__numberOfElements += 1
+        return True
+
+    def remove(self, target: int) -&gt; bool:
+        &#34;&#34;&#34;Removes the first instance of target from the buffer,
+        replacing it with the last element in the buffer.
+
+        Args:
+            target (int): The value to remove from the buffer.
+        Returns:
+            bool: True if target was found and removed, False otherwise.
+
+        &#34;&#34;&#34;
+        location = self.locationOf(target)
+        if location != -1:
+            self.__intArray[location] = self.__intArray[self.__numberOfElements-1]
+            self.__numberOfElements -= 1
+            return True
+        return False
+    
+    def stableRemove(self, target: int) -&gt; bool:
+        &#34;&#34;&#34;Removes the first instance of target from the buffer,
+        maintaining the order of the buffer.
+
+        Args:
+            target (int): The value to remove from the buffer.
+        Returns:
+            bool: True if target was found and removed, False otherwise.
+
+        &#34;&#34;&#34;
+        # create a copy of the intArray
+        location = self.locationOf(target)
+
+        if location != -1:
+            # loop through numberOfElements starting at the location
+            # and set the value to the next value in the array
+            # at the end, set the very last element to 0 and reduce
+            # the number of elements
+            for i in range(location, self.__numberOfElements-1):
+                self.__intArray[i] = self.__intArray[i+1]
+            self.__intArray[self.__numberOfElements-1] = 0
+            self.__numberOfElements -= 1
+            return True
+        return False
+
+    def _oldRemove(self, target: int) -&gt; bool:
+        if self.__numberOfElements == 0:
+            return False
+        for i in range(self.__BUFFER_SIZE):
+            if self.__intArray[i] == target:
+                self.__intArray[i] = self.__intArray[self.__numberOfElements-1]
+                self.__intArray[self.__numberOfElements-1] = 0
+                self.__numberOfElements -= 1
+                return True
+        return False
+
+    def _oldStableRemove(self, target: int) -&gt; bool:
+        # if we have no elements to remove, quickly return False
+        # if self.__numberOfElements == 0:
+        #     return False
+
+        # create a new buffer with the same type as self.__intArray
+        # without caring whether it is `collections.UserList` or `list`
+        newArray = type(self.__intArray)()
+
+        i, j = 0, 0
+        result = False
+        for i in range(self.__BUFFER_SIZE):
+            newArray.append(0)
+            value = self.__intArray[i]
+            if value != target and value != 0:
+                newArray[j] = self.__intArray[i]
+                j += 1
+
+        if j == self.__numberOfElements:
+            # then we didn&#39;t remove any elements
+            return False
+
+        self.__intArray = newArray
+        self.__numberOfElements = j
+        return True</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="src.cisc0503_dsa.buffer.tests"><code class="name flex">
+<span>def <span class="ident">tests</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Run the tests for this assignment.</p>
+<p>Tests can be run either in any of the following ways: </p>
+<ol>
+<li>importing this module and calling this function,</li>
+<li>running this file directly from the command line or IDLE</li>
+<li>running <code>one_tests.py</code> from the command line or IDLE</li>
+</ol></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tests():
+    &#34;&#34;&#34;Run the tests for this assignment.
+
+    Tests can be run either in any of the following ways: 
+    
+    1. importing this module and calling this function,
+    2. running this file directly from the command line or IDLE
+    3. running `one_tests.py` from the command line or IDLE
+
+    &#34;&#34;&#34;
+    from tests import BufferArrayMain
+    suite = unittest.TestLoader().loadTestsFromTestCase(BufferArrayMain)
+    unittest.TextTestRunner(verbosity=2).run(suite)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.cisc0503_dsa.buffer.BufferArray"><code class="flex name class">
+<span>class <span class="ident">BufferArray</span></span>
+<span>(</span><span>buffer_size: int = 8)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Initialize BufferArray</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BufferArray:
+    __numberOfElements = 0
+    __BUFFER_SIZE = None
+
+    def __init__(self, buffer_size: int = 8):
+        &#34;&#34;&#34;Initialize BufferArray&#34;&#34;&#34;
+        
+        # `collections.UserList` is a Class implementation of the built-in list
+        # data type type. We can use so that we may remove some methods from it
+        # and avoid using those built-in methods, which would defeat the
+        # purpose of the assignment. 
+
+        # Said differently, swapping out the two lines below would work just
+        # fine, except we would not be able to remove methods from the builtin
+        # list object (e.g. `self.__intArray.append = None` would not work).
+        self.__intArray = collections.UserList()
+        # self.__intArray = []
+
+    
+        # Initialize all of the elements in the BufferArray to `0`. We must
+        # run this before removing methods from the list, otherwise we can&#39;t
+        # call `self.__intArray.append(0)`
+        self.__BUFFER_SIZE = buffer_size
+        for i in range(self.__BUFFER_SIZE):
+            self.__intArray.append(0)
+
+        # If we used `collections.UserList()` above, we can now remove the
+        # following methods:
+        if type(self.__intArray) is collections.UserList:
+            self.__intArray.append = None
+            self.__intArray.extend = None
+            self.__intArray.insert = None
+            self.__intArray.remove = None
+            self.__intArray.pop = None
+            self.__intArray.clear = None
+            self.__intArray.count = None
+            self.__intArray.__str__ = None
+
+    def __str__(self):
+        &#34;&#34;&#34;Representation of the BufferArray (as a string)
+        
+        For debugging purposes only, not used anywhere.
+
+        Example in the Python shell:
+        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; b = BufferArray()
+        &gt;&gt;&gt; b.insert(1)
+        True
+        &gt;&gt;&gt; print(b)
+        BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
+        
+        &#34;&#34;&#34;
+        return self.__repr__() # avoid duplicating code
+        # alternatively one could do:
+        # return &#39;%s&#39; % self.display()
+
+    def __repr__(self):
+        &#34;&#34;&#34;Representation of the BufferArray object
+        
+        For debugging purposes only, not used anywhere.
+
+        Example in the Python shell:
+        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; b = BufferArray()
+        &gt;&gt;&gt; b.insert(1)
+        True
+        &gt;&gt;&gt; b
+        BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
+        
+        &#34;&#34;&#34;
+        return f&#39;BufferArray({self.__intArray})&#39;
+
+    def display(self):
+        &#34;&#34;&#34;Displays the contents of the buffer.
+
+        This approach matches that of the `run()` command
+        in the `simple_sort.py` file from the first class.
+
+        One possible improvement would to remove the trailing
+        space at the end of the output, prior to the newline.
+        That isn&#39;t done here since that was not a requirement
+        from the assignment prompt.
+
+        &#34;&#34;&#34;
+        i = 0
+        for n in range(self.__BUFFER_SIZE):
+            if self.__intArray[n] != 0:
+                i += 1
+                print(self.__intArray[n], end=&#34; &#34;) 
+            if i == self.__numberOfElements:
+                break
+        print(&#39;&#39;)
+
+
+    def locationOf(self, target: int) -&gt; int:
+        &#34;&#34;&#34;Returns the index of a value in the buffer.
+
+        Args:
+            target (int): The value to find in the buffer.
+        Returns:
+            int: The index of target in the buffer, or -1 if not found.
+        
+        &#34;&#34;&#34;
+        index = 0
+        for value in self.__intArray:
+            if value == target:
+                return index
+            index += 1
+        return -1
+
+    def find(self, target: int) -&gt; bool:
+        &#34;&#34;&#34;Checks if a value is present in the buffer.
+        
+        Args:
+            target (int): The value to find in the buffer.
+        Returns:
+            bool: True if target was found, False otherwise.
+        
+        &#34;&#34;&#34;
+        return True if self.locationOf(target) != -1 else False
+
+    def insert(self, value: int) -&gt; bool:
+        &#34;&#34;&#34;Inserts a value into the end of the buffer.
+
+        Args:
+            value (int): The value to insert into the buffer.
+        Returns:
+            bool: False if we&#39;re already at capacity, True otherwise.
+
+        &#34;&#34;&#34;
+        if self.__numberOfElements == self.__BUFFER_SIZE:
+            return False
+        self.__intArray[self.__numberOfElements] = value
+        self.__numberOfElements += 1
+        return True
+
+    def remove(self, target: int) -&gt; bool:
+        &#34;&#34;&#34;Removes the first instance of target from the buffer,
+        replacing it with the last element in the buffer.
+
+        Args:
+            target (int): The value to remove from the buffer.
+        Returns:
+            bool: True if target was found and removed, False otherwise.
+
+        &#34;&#34;&#34;
+        location = self.locationOf(target)
+        if location != -1:
+            self.__intArray[location] = self.__intArray[self.__numberOfElements-1]
+            self.__numberOfElements -= 1
+            return True
+        return False
+    
+    def stableRemove(self, target: int) -&gt; bool:
+        &#34;&#34;&#34;Removes the first instance of target from the buffer,
+        maintaining the order of the buffer.
+
+        Args:
+            target (int): The value to remove from the buffer.
+        Returns:
+            bool: True if target was found and removed, False otherwise.
+
+        &#34;&#34;&#34;
+        # create a copy of the intArray
+        location = self.locationOf(target)
+
+        if location != -1:
+            # loop through numberOfElements starting at the location
+            # and set the value to the next value in the array
+            # at the end, set the very last element to 0 and reduce
+            # the number of elements
+            for i in range(location, self.__numberOfElements-1):
+                self.__intArray[i] = self.__intArray[i+1]
+            self.__intArray[self.__numberOfElements-1] = 0
+            self.__numberOfElements -= 1
+            return True
+        return False
+
+    def _oldRemove(self, target: int) -&gt; bool:
+        if self.__numberOfElements == 0:
+            return False
+        for i in range(self.__BUFFER_SIZE):
+            if self.__intArray[i] == target:
+                self.__intArray[i] = self.__intArray[self.__numberOfElements-1]
+                self.__intArray[self.__numberOfElements-1] = 0
+                self.__numberOfElements -= 1
+                return True
+        return False
+
+    def _oldStableRemove(self, target: int) -&gt; bool:
+        # if we have no elements to remove, quickly return False
+        # if self.__numberOfElements == 0:
+        #     return False
+
+        # create a new buffer with the same type as self.__intArray
+        # without caring whether it is `collections.UserList` or `list`
+        newArray = type(self.__intArray)()
+
+        i, j = 0, 0
+        result = False
+        for i in range(self.__BUFFER_SIZE):
+            newArray.append(0)
+            value = self.__intArray[i]
+            if value != target and value != 0:
+                newArray[j] = self.__intArray[i]
+                j += 1
+
+        if j == self.__numberOfElements:
+            # then we didn&#39;t remove any elements
+            return False
+
+        self.__intArray = newArray
+        self.__numberOfElements = j
+        return True</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="src.cisc0503_dsa.buffer.BufferArray.display"><code class="name flex">
+<span>def <span class="ident">display</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Displays the contents of the buffer.</p>
+<p>This approach matches that of the <code>run()</code> command
+in the <code>simple_sort.py</code> file from the first class.</p>
+<p>One possible improvement would to remove the trailing
+space at the end of the output, prior to the newline.
+That isn't done here since that was not a requirement
+from the assignment prompt.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display(self):
+    &#34;&#34;&#34;Displays the contents of the buffer.
+
+    This approach matches that of the `run()` command
+    in the `simple_sort.py` file from the first class.
+
+    One possible improvement would to remove the trailing
+    space at the end of the output, prior to the newline.
+    That isn&#39;t done here since that was not a requirement
+    from the assignment prompt.
+
+    &#34;&#34;&#34;
+    i = 0
+    for n in range(self.__BUFFER_SIZE):
+        if self.__intArray[n] != 0:
+            i += 1
+            print(self.__intArray[n], end=&#34; &#34;) 
+        if i == self.__numberOfElements:
+            break
+    print(&#39;&#39;)</code></pre>
+</details>
+</dd>
+<dt id="src.cisc0503_dsa.buffer.BufferArray.find"><code class="name flex">
+<span>def <span class="ident">find</span></span>(<span>self, target: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Checks if a value is present in the buffer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>target</code></strong> :&ensp;<code>int</code></dt>
+<dd>The value to find in the buffer.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if target was found, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find(self, target: int) -&gt; bool:
+    &#34;&#34;&#34;Checks if a value is present in the buffer.
+    
+    Args:
+        target (int): The value to find in the buffer.
+    Returns:
+        bool: True if target was found, False otherwise.
+    
+    &#34;&#34;&#34;
+    return True if self.locationOf(target) != -1 else False</code></pre>
+</details>
+</dd>
+<dt id="src.cisc0503_dsa.buffer.BufferArray.insert"><code class="name flex">
+<span>def <span class="ident">insert</span></span>(<span>self, value: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Inserts a value into the end of the buffer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>value</code></strong> :&ensp;<code>int</code></dt>
+<dd>The value to insert into the buffer.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>False if we're already at capacity, True otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def insert(self, value: int) -&gt; bool:
+    &#34;&#34;&#34;Inserts a value into the end of the buffer.
+
+    Args:
+        value (int): The value to insert into the buffer.
+    Returns:
+        bool: False if we&#39;re already at capacity, True otherwise.
+
+    &#34;&#34;&#34;
+    if self.__numberOfElements == self.__BUFFER_SIZE:
+        return False
+    self.__intArray[self.__numberOfElements] = value
+    self.__numberOfElements += 1
+    return True</code></pre>
+</details>
+</dd>
+<dt id="src.cisc0503_dsa.buffer.BufferArray.locationOf"><code class="name flex">
+<span>def <span class="ident">locationOf</span></span>(<span>self, target: int) ‑> int</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the index of a value in the buffer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>target</code></strong> :&ensp;<code>int</code></dt>
+<dd>The value to find in the buffer.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>int</code></dt>
+<dd>The index of target in the buffer, or -1 if not found.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def locationOf(self, target: int) -&gt; int:
+    &#34;&#34;&#34;Returns the index of a value in the buffer.
+
+    Args:
+        target (int): The value to find in the buffer.
+    Returns:
+        int: The index of target in the buffer, or -1 if not found.
+    
+    &#34;&#34;&#34;
+    index = 0
+    for value in self.__intArray:
+        if value == target:
+            return index
+        index += 1
+    return -1</code></pre>
+</details>
+</dd>
+<dt id="src.cisc0503_dsa.buffer.BufferArray.remove"><code class="name flex">
+<span>def <span class="ident">remove</span></span>(<span>self, target: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes the first instance of target from the buffer,
+replacing it with the last element in the buffer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>target</code></strong> :&ensp;<code>int</code></dt>
+<dd>The value to remove from the buffer.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if target was found and removed, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self, target: int) -&gt; bool:
+    &#34;&#34;&#34;Removes the first instance of target from the buffer,
+    replacing it with the last element in the buffer.
+
+    Args:
+        target (int): The value to remove from the buffer.
+    Returns:
+        bool: True if target was found and removed, False otherwise.
+
+    &#34;&#34;&#34;
+    location = self.locationOf(target)
+    if location != -1:
+        self.__intArray[location] = self.__intArray[self.__numberOfElements-1]
+        self.__numberOfElements -= 1
+        return True
+    return False</code></pre>
+</details>
+</dd>
+<dt id="src.cisc0503_dsa.buffer.BufferArray.stableRemove"><code class="name flex">
+<span>def <span class="ident">stableRemove</span></span>(<span>self, target: int) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Removes the first instance of target from the buffer,
+maintaining the order of the buffer.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>target</code></strong> :&ensp;<code>int</code></dt>
+<dd>The value to remove from the buffer.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>True if target was found and removed, False otherwise.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stableRemove(self, target: int) -&gt; bool:
+    &#34;&#34;&#34;Removes the first instance of target from the buffer,
+    maintaining the order of the buffer.
+
+    Args:
+        target (int): The value to remove from the buffer.
+    Returns:
+        bool: True if target was found and removed, False otherwise.
+
+    &#34;&#34;&#34;
+    # create a copy of the intArray
+    location = self.locationOf(target)
+
+    if location != -1:
+        # loop through numberOfElements starting at the location
+        # and set the value to the next value in the array
+        # at the end, set the very last element to 0 and reduce
+        # the number of elements
+        for i in range(location, self.__numberOfElements-1):
+            self.__intArray[i] = self.__intArray[i+1]
+        self.__intArray[self.__numberOfElements-1] = 0
+        self.__numberOfElements -= 1
+        return True
+    return False</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.cisc0503_dsa" href="index.html">src.cisc0503_dsa</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="src.cisc0503_dsa.buffer.tests" href="#src.cisc0503_dsa.buffer.tests">tests</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.cisc0503_dsa.buffer.BufferArray" href="#src.cisc0503_dsa.buffer.BufferArray">BufferArray</a></code></h4>
+<ul class="two-column">
+<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.display" href="#src.cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
+<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.find" href="#src.cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
+<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.insert" href="#src.cisc0503_dsa.buffer.BufferArray.insert">insert</a></code></li>
+<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.locationOf" href="#src.cisc0503_dsa.buffer.BufferArray.locationOf">locationOf</a></code></li>
+<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.remove" href="#src.cisc0503_dsa.buffer.BufferArray.remove">remove</a></code></li>
+<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.stableRemove" href="#src.cisc0503_dsa.buffer.BufferArray.stableRemove">stableRemove</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

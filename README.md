@@ -28,10 +28,10 @@ pip install cisc0503_dsa
 
 ## Usage
 
-After installation, you can import and use the modules as follows:
+After installation, you can import and use the module as follows:
 
 ```python
-from cisc0503_dsa import buffer
+from cisc0503_dsa import BufferArray
 ```
 
 ## Testing
@@ -40,6 +40,20 @@ To run the tests, you can use the following command:
 
 ```
 python -m unittest discover tests
+```
+
+## Building the Documentation
+
+To build the documentation, you can use the following command:
+
+```
+#  pdoc --html --force --output-dir ./docs ./src/cisc0503_dsa
+```
+
+Note: The documentation is already built and included in the `docs` directory. Building it from source requires the `pdoc3` package, which can be installed using pip:
+
+```
+pip install pdoc3
 ```
 
 ## Assignments

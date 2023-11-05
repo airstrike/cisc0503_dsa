@@ -15,7 +15,8 @@ import unittest
 # Add the path to the src directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/src')
 
-from buffer import BufferArray
+# from buffer import BufferArray
+from cisc0503_dsa import BufferArray
 
 def read(fn):
     """Temporarily redirect stdout to a capture object and return the value."""
@@ -106,15 +107,15 @@ class BufferArrayMain(unittest.TestCase):
         self.assertEqual(read(self.buffer.display), "1 2 8 \n")
 
     def test_oldRemove(self):
-        self.assertEqual(self.buffer.oldRemove(5), False)
-        self.assertEqual(self.buffer.oldRemove(9), True)
+        self.assertEqual(self.buffer._oldRemove(5), False)
+        self.assertEqual(self.buffer._oldRemove(9), True)
         self.assertEqual(self.buffer.locationOf(9), -1)
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 8 2 \n")
 
     def test_oldStableRemove(self):
-        self.assertEqual(self.buffer.oldStableRemove(5), False)
-        self.assertEqual(self.buffer.oldStableRemove(9), True)
+        self.assertEqual(self.buffer._oldStableRemove(5), False)
+        self.assertEqual(self.buffer._oldStableRemove(9), True)
         self.assertEqual(self.buffer.locationOf(9), -1)
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 2 8 \n")
