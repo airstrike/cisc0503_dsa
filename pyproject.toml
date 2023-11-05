@@ -1,0 +1,25 @@
+[project]
+name = "cisc0503_dsa"
+version = "0.1.0"
+authors = [
+  { name="Andy Terra", email="pypi@andyterra.com" },
+]
+description = "This package contains solutions and implementations for the assignments in the CISC 0503 Data Structures and Algorithms course."
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Topic :: Software Development",
+    "License :: OSI Approved :: The Unlicense (Unlicense)",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/airstrike/cisc0503_dsa"
+"Bug Tracker" = "https://github.com/pypa/airstrike/cisc0503_dsa"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
