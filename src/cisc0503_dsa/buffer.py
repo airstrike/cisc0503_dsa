@@ -1,91 +1,13 @@
 import unittest
 import sys
 
-# Assignment #1
-
-# 1.	Create a Python class called BufferArray. It will have an array to hold
-# integers and a variable, called numberOfElements, that records how many values
-# are being stored in the array.
-
-# 2.	Give the BufferArray an integer constant called BUFFER_SIZE and initialize
-# it to 8.
-
-# 3.	Give the BufferArray a variable called numberOfElements and initialize it
-# to 0.
-
-# 4.	Make BUFFER_SIZE, intArray, and numberOfElements private.
-
-# 5.	The BufferArray should have an __init__ which initializes all elements in
-# the Buffer to 0. 
-
-# 6.	Give the BufferArray a method called insert() that takes an integer
-# argument, called value, and returns a Boolean. For starters, just have it
-# return false. 
-
-# 7.	Give the BufferArray a method called remove() that takes an integer
-# argument, called value, and returns a Boolean. For starters, just have it
-# return false. 
-
-# 8.	Give the BufferArray a method called find() that takes an integer argument,
-# called target, and returns a Boolean. For starters, just have it return false.
-
-# 9.	Give the BufferArray a public method called display() that takes no
-# arguments and prints the list. 
-
-# 10.	Give the BufferArray a method called locationOf() that takes an integer
-# argument, called target, and returns an integer. 
-
-# 11.	Write a test driver for your BufferArray class called BufferArrayMain in a
-# different file that tests the insert, display, find, and remove methods. Make
-# the tests fairly thorough. 
-
-def tests():
-    """Run the tests for this assignment.
-
-    Tests can be run either in any of the following ways: 
-    
-    1. importing this module and calling this function,
-    2. running this file directly from the command line or IDLE
-    3. running `one_tests.py` from the command line or IDLE
-
-    """
-    from tests import BufferArrayMain
-    suite = unittest.TestLoader().loadTestsFromTestCase(BufferArrayMain)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-
-# 12.	Have the insert method add the value argument to the next available space
-# at the end of the array and increment the numberOfElements variable. Then it
-# should return true. If the intArray is already full, it should just return
-# false without doing anything. 
-
-# 13.	Have the locationOf method visit every value in the array. If it finds a
-# value that matches the target argument, it should return its location in the
-# array (its index). If no values in the array match the target, it should
-# return -1. 
-
-# 14.	Have the find method look for the value in the intArray. If a value that
-# was put in the intArray matches the argument target, it should return the
-# value true. If no values that were place in the intArray matches the target,
-# it should return false. Use the locationOf method to implement this behavior. 
-
-# 15.	Have the remove method remove the first array element that matches the
-# target. To do this, it should replace it with the last value in the array, and
-# decrement the numberOfElements count. Then it should return true. If no
-# elements match the target value, it should just return false. 
-
-# 16.	Give the BufferArray class one more method, called stableRemove. Have the
-# stableRemove method remove the first array element that matches the target and
-# decrement the numberOfElements count. Then it should return true. If no
-# elements match the target value, it should just return false. (In data
-# structures, “stable” means that the order is not changed.)
-
 import collections
 
 class BufferArray:
     __numberOfElements = 0
     __BUFFER_SIZE = None
 
-    def __init__(self, buffer_size: int = 8):
+    def __init__(self, buffer_size: int = 8, native=False):
         """Initialize BufferArray"""
         
         # `collections.UserList` is a Class implementation of the built-in list
@@ -96,8 +18,10 @@ class BufferArray:
         # Said differently, swapping out the two lines below would work just
         # fine, except we would not be able to remove methods from the builtin
         # list object (e.g. `self.__intArray.append = None` would not work).
-        self.__intArray = collections.UserList()
-        # self.__intArray = []
+        if native:
+            self.__intArray = []
+        else:
+            self.__intArray = collections.UserList()
 
     
         # Initialize all of the elements in the BufferArray to `0`. We must

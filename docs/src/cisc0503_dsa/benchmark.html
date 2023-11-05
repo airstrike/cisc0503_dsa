@@ -28,16 +28,20 @@
 </summary>
 <pre><code class="python">import time
 import random
-from .buffer import BufferArray  # Replace &#39;your_module_name&#39; with the name of your module
 
-NUM_ARRAYS = 100 #00  # This is the CONSTANT you can change later
+try:
+    from .buffer import BufferArray # for docs
+except ImportError:
+    from buffer import BufferArray
+
+NUM_ARRAYS = 100
 
 def benchmark_remove_methods(name, method1, method2, arrays, remove_element):
     times_method1 = []
     times_method2 = []
 
     for arr in arrays:
-        buffer_array = BufferArray(len(arr))
+        buffer_array = BufferArray(len(arr), native=True)
         for num in arr:
             buffer_array.insert(num)
 
@@ -55,7 +59,6 @@ def benchmark_remove_methods(name, method1, method2, arrays, remove_element):
     avg_time_method2 = sum(times_method2) / len(times_method2)
 
     print(f&#39;\nBenchmarking {name}&#39;)
-    # print(f&#39;Removing element: {remove_element}&#39;)
     print(f&#34;Average time for {method1:&lt;18}: {avg_time_method1:.10f} seconds&#34;)
     print(f&#34;Average time for {method2:&lt;18}: {avg_time_method2:.10f} seconds&#34;)
     print(f&#39;{&#34;-&#34; * 80}&#39;)
@@ -74,22 +77,22 @@ if __name__ == &#39;__main__&#39;:
     # 7. 10,000 arrays benchmark when the element being removed is not present in the array
 
     # Fast Remove
-    benchmark_remove_methods(f&#34;1. {NUM_ARRAYS} random arrays&#34;, &#34;oldRemove&#34;, &#34;remove&#34;, arrays_random, random.randint(1, 2**17))
-    benchmark_remove_methods(f&#34;2. {NUM_ARRAYS} random arrays of length 2^6, first element removed&#34;, &#34;oldRemove&#34;, &#34;remove&#34;, arrays_start_2_6, 0)
-    benchmark_remove_methods(f&#34;3. {NUM_ARRAYS} random arrays of length 2^6, last element removed&#34;, &#34;oldRemove&#34;, &#34;remove&#34;, arrays_start_2_6, 0)
-    benchmark_remove_methods(f&#34;4. {NUM_ARRAYS} random arrays of length 2^16, first element removed&#34;, &#34;oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 - 1)
-    benchmark_remove_methods(f&#34;5. {NUM_ARRAYS} random arrays of length 2^16, last element removed&#34;,&#34;oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 - 1)
-    benchmark_remove_methods(f&#34;6. {NUM_ARRAYS} random arrays of length 2^16, middle element removed&#34;,&#34;oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 // 2)
-    benchmark_remove_methods(f&#34;7. {NUM_ARRAYS} random arrays of length 2^16, element not present&#34;,&#34;oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 + 1)
+    benchmark_remove_methods(f&#34;1. {NUM_ARRAYS} random arrays&#34;, &#34;_oldRemove&#34;, &#34;remove&#34;, arrays_random, random.randint(1, 2**17))
+    benchmark_remove_methods(f&#34;2. {NUM_ARRAYS} random arrays of length 2^6, first element removed&#34;, &#34;_oldRemove&#34;, &#34;remove&#34;, arrays_start_2_6, 0)
+    benchmark_remove_methods(f&#34;3. {NUM_ARRAYS} random arrays of length 2^6, last element removed&#34;, &#34;_oldRemove&#34;, &#34;remove&#34;, arrays_start_2_6, 0)
+    benchmark_remove_methods(f&#34;4. {NUM_ARRAYS} random arrays of length 2^16, first element removed&#34;, &#34;_oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 - 1)
+    benchmark_remove_methods(f&#34;5. {NUM_ARRAYS} random arrays of length 2^16, last element removed&#34;,&#34;_oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 - 1)
+    benchmark_remove_methods(f&#34;6. {NUM_ARRAYS} random arrays of length 2^16, middle element removed&#34;,&#34;_oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 // 2)
+    benchmark_remove_methods(f&#34;7. {NUM_ARRAYS} random arrays of length 2^16, element not present&#34;,&#34;_oldRemove&#34;, &#34;remove&#34;, arrays_end_2_16, 2**16 + 1)
 
     # Stable Remove
-    benchmark_remove_methods(f&#34;1. {NUM_ARRAYS} random arrays&#34;, &#34;oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_random, random.randint(1, 2**17))
-    benchmark_remove_methods(f&#34;2. {NUM_ARRAYS} random arrays of length 2^6, first element removed&#34;, &#34;oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_start_2_6, 0)
-    benchmark_remove_methods(f&#34;3. {NUM_ARRAYS} random arrays of length 2^6, last element removed&#34;, &#34;oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_start_2_6, 0)
-    benchmark_remove_methods(f&#34;4. {NUM_ARRAYS} random arrays of length 2^16, first element removed&#34;, &#34;oldStableRemove&#34;, &#34;oldRemove&#34;, arrays_end_2_16, 2**16 - 1)
-    benchmark_remove_methods(f&#34;5. {NUM_ARRAYS} random arrays of length 2^16, last element removed&#34;,&#34;oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_end_2_16, 2**16 - 1)
-    benchmark_remove_methods(f&#34;6. {NUM_ARRAYS} random arrays of length 2^16, middle element removed&#34;,&#34;oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_end_2_16, 2**16 // 2)
-    benchmark_remove_methods(f&#34;7. {NUM_ARRAYS} random arrays of length 2^16, element not present&#34;,&#34;oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_end_2_16, 2**16 + 1)</code></pre>
+    benchmark_remove_methods(f&#34;1. {NUM_ARRAYS} random arrays&#34;, &#34;_oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_random, random.randint(1, 2**17))
+    benchmark_remove_methods(f&#34;2. {NUM_ARRAYS} random arrays of length 2^6, first element removed&#34;, &#34;_oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_start_2_6, 0)
+    benchmark_remove_methods(f&#34;3. {NUM_ARRAYS} random arrays of length 2^6, last element removed&#34;, &#34;_oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_start_2_6, 0)
+    benchmark_remove_methods(f&#34;4. {NUM_ARRAYS} random arrays of length 2^16, first element removed&#34;, &#34;_oldStableRemove&#34;, &#34;_oldRemove&#34;, arrays_end_2_16, 2**16 - 1)
+    benchmark_remove_methods(f&#34;5. {NUM_ARRAYS} random arrays of length 2^16, last element removed&#34;,&#34;_oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_end_2_16, 2**16 - 1)
+    benchmark_remove_methods(f&#34;6. {NUM_ARRAYS} random arrays of length 2^16, middle element removed&#34;,&#34;_oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_end_2_16, 2**16 // 2)
+    benchmark_remove_methods(f&#34;7. {NUM_ARRAYS} random arrays of length 2^16, element not present&#34;,&#34;_oldStableRemove&#34;, &#34;stableRemove&#34;, arrays_end_2_16, 2**16 + 1)</code></pre>
 </details>
 </section>
 <section>
@@ -113,7 +116,7 @@ if __name__ == &#39;__main__&#39;:
     times_method2 = []
 
     for arr in arrays:
-        buffer_array = BufferArray(len(arr))
+        buffer_array = BufferArray(len(arr), native=True)
         for num in arr:
             buffer_array.insert(num)
 
@@ -131,7 +134,6 @@ if __name__ == &#39;__main__&#39;:
     avg_time_method2 = sum(times_method2) / len(times_method2)
 
     print(f&#39;\nBenchmarking {name}&#39;)
-    # print(f&#39;Removing element: {remove_element}&#39;)
     print(f&#34;Average time for {method1:&lt;18}: {avg_time_method1:.10f} seconds&#34;)
     print(f&#34;Average time for {method2:&lt;18}: {avg_time_method2:.10f} seconds&#34;)
     print(f&#39;{&#34;-&#34; * 80}&#39;)</code></pre>
