@@ -26,7 +26,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .buffer import BufferArray
+<pre><code class="python">try:
+    from .buffer import BufferArray
+except ImportError:
+    from buffer import BufferArray
 
 class BufferArrayNoDups(BufferArray):
     def insert(self, value: int) -&gt; bool:

@@ -104,7 +104,9 @@ class BufferArray:
         BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
         
         &#34;&#34;&#34;
-        return f&#39;BufferArray({self.__intArray})&#39;
+        realElements = self.__intArray[:self.__numberOfElements]
+        staleElements = self.__intArray[self.__numberOfElements:]
+        return f&#39;BufferArray({realElements}) {staleElements}&#39;
 
     def display(self):
         &#34;&#34;&#34;Displays the contents of the buffer.
@@ -304,7 +306,9 @@ class BufferArray:
         BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
         
         &#34;&#34;&#34;
-        return f&#39;BufferArray({self.__intArray})&#39;
+        realElements = self.__intArray[:self.__numberOfElements]
+        staleElements = self.__intArray[self.__numberOfElements:]
+        return f&#39;BufferArray({realElements}) {staleElements}&#39;
 
     def display(self):
         &#34;&#34;&#34;Displays the contents of the buffer.
