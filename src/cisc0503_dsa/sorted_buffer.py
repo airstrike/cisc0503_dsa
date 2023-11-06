@@ -1,5 +1,9 @@
-from .buffer import BufferArray
-from .buffer_ext import BufferArrayNoDups, BufferArrayWithDups
+try:
+    from .buffer import BufferArray
+    from .buffer_ext import BufferArrayNoDups, BufferArrayWithDups
+except ImportError:
+    from buffer import BufferArray
+    from buffer_ext import BufferArrayNoDups, BufferArrayWithDups
 
 class SortedBufferArrayNoDups(BufferArrayNoDups):
     def locationOf(self, target: int) -> int:

@@ -76,7 +76,9 @@ class BufferArray:
         BufferArray([1, 0, 0, 0, 0, 0, 0, 0])
         
         """
-        return f'BufferArray({self.__intArray})'
+        realElements = self.__intArray[:self.__numberOfElements]
+        staleElements = self.__intArray[self.__numberOfElements:]
+        return f'BufferArray({realElements}) {staleElements}'
 
     def display(self):
         """Displays the contents of the buffer.

@@ -1,4 +1,7 @@
-from .buffer import BufferArray
+try:
+    from .buffer import BufferArray
+except ImportError:
+    from buffer import BufferArray
 
 class BufferArrayNoDups(BufferArray):
     def insert(self, value: int) -> bool:
