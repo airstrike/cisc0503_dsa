@@ -5,10 +5,12 @@ import collections
 
 class BufferArray:
     __numberOfElements = 0
-    __BUFFER_SIZE = None
+    __BUFFER_SIZE = 0
+    __intArray = []
 
-    def __init__(self, buffer_size: int = 8, native=False):
+    def __init__(self, buffer_size: int, native=False):
         """Initialize BufferArray"""
+        self.__BUFFER_SIZE = buffer_size
         
         # `collections.UserList` is a Class implementation of the built-in list
         # data type type. We can use so that we may remove some methods from it
@@ -27,8 +29,7 @@ class BufferArray:
         # Initialize all of the elements in the BufferArray to `0`. We must
         # run this before removing methods from the list, otherwise we can't
         # call `self.__intArray.append(0)`
-        self.__BUFFER_SIZE = buffer_size
-        for i in range(self.__BUFFER_SIZE):
+        for i in range(buffer_size):
             self.__intArray.append(0)
 
         # If we used `collections.UserList()` above, we can now remove the
@@ -89,13 +90,8 @@ class BufferArray:
         from the assignment prompt.
 
         """
-        i = 0
-        for n in range(self.__BUFFER_SIZE):
-            if self.__intArray[n] != 0:
-                i += 1
-                print(self.__intArray[n], end=" ") 
-            if i == self.__numberOfElements:
-                break
+        for n in range(self.__numberOfElements):
+            print(self.__intArray[n], end=" ") 
         print('')
 
 
@@ -108,11 +104,9 @@ class BufferArray:
             int: The index of target in the buffer, or -1 if not found.
         
         """
-        index = 0
-        for value in self.__intArray:
-            if value == target:
-                return index
-            index += 1
+        for i in range(self.__numberOfElements):
+            if self.__intArray[i] == target:
+                return i
         return -1
 
     def find(self, target: int) -> bool:
@@ -141,7 +135,7 @@ class BufferArray:
         self.__numberOfElements += 1
         return True
 
-    def remove(self, target: int) -> bool:
+    def fastRemove(self, target: int) -> bool:
         """Removes the first instance of target from the buffer,
         replacing it with the last element in the buffer.
 
@@ -178,44 +172,13 @@ class BufferArray:
             # the number of elements
             for i in range(location, self.__numberOfElements-1):
                 self.__intArray[i] = self.__intArray[i+1]
-            self.__intArray[self.__numberOfElements-1] = 0
+
+            # the next line isn't needed as we will eventually overwrite
+            # the last element with a new value when we call insert.
+            # since every method uses numberOfElements, it is safe to
+            # leave it as is.
+            # self.__intArray[self.__numberOfElements-1] = 0
+
             self.__numberOfElements -= 1
             return True
         return False
-
-    def _oldRemove(self, target: int) -> bool:
-        if self.__numberOfElements == 0:
-            return False
-        for i in range(self.__BUFFER_SIZE):
-            if self.__intArray[i] == target:
-                self.__intArray[i] = self.__intArray[self.__numberOfElements-1]
-                self.__intArray[self.__numberOfElements-1] = 0
-                self.__numberOfElements -= 1
-                return True
-        return False
-
-    def _oldStableRemove(self, target: int) -> bool:
-        # if we have no elements to remove, quickly return False
-        # if self.__numberOfElements == 0:
-        #     return False
-
-        # create a new buffer with the same type as self.__intArray
-        # without caring whether it is `collections.UserList` or `list`
-        newArray = type(self.__intArray)()
-
-        i, j = 0, 0
-        result = False
-        for i in range(self.__BUFFER_SIZE):
-            newArray.append(0)
-            value = self.__intArray[i]
-            if value != target and value != 0:
-                newArray[j] = self.__intArray[i]
-                j += 1
-
-        if j == self.__numberOfElements:
-            # then we didn't remove any elements
-            return False
-
-        self.__intArray = newArray
-        self.__numberOfElements = j
-        return True

@@ -123,7 +123,6 @@ class BufferArrayMain(unittest.TestCase):
         # check initialized correctly
         # should have 8 elements, all set to zero
         self.assertEqual(b._BufferArray__numberOfElements, 0)
-        self.assertEqual(b._BufferArray__BUFFER_SIZE, 8)
         self.assertEqual(b._BufferArray__intArray, [0, 0, 0, 0, 0, 0, 0, 0])
 
         # should print no elements since 0 = null for this exercise

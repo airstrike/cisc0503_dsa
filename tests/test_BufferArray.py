@@ -1,12 +1,3 @@
-# CISC 503 Data Structures and Algorithms • Fall 2023
-# Assignment #1
-# Author: Andy Terra
-# Date: 10/29/2023
-
-# Documentation can be be generated with the following commands:
-# $ pip install pdoc3
-# $ pdoc --html --force --output-dir ./docs one_tests.py
-
 import io
 import os
 import sys
@@ -15,7 +6,6 @@ import unittest
 # Add the path to the src directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/src')
 
-# from buffer import BufferArray
 from cisc0503_dsa import BufferArray
 
 def read(fn):
@@ -35,7 +25,7 @@ class BufferArrayMain(unittest.TestCase):
         This will run before each test_* method.
 
         """
-        self.buffer = BufferArray()
+        self.buffer = BufferArray(buffer_size=8)
         for value in [1, 9, 2, 8]:
             self.buffer.insert(value)
 
@@ -92,9 +82,12 @@ class BufferArrayMain(unittest.TestCase):
         results.append(self.buffer.find(5))
         self.assertEqual(results, [False, True, True])
 
-    def test_remove(self):
-        self.assertEqual(self.buffer.remove(5), False)
-        self.assertEqual(self.buffer.remove(9), True)
+    def test_fastRemove(self):
+        self.assertEqual(self.buffer._BufferArray__numberOfElements, 4)
+        self.assertEqual(self.buffer.fastRemove(5), False)
+        self.assertEqual(self.buffer._BufferArray__numberOfElements, 4)
+        self.assertEqual(self.buffer.fastRemove(9), True)
+        self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(self.buffer.locationOf(9), -1)
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 8 2 \n")
@@ -106,29 +99,13 @@ class BufferArrayMain(unittest.TestCase):
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
         self.assertEqual(read(self.buffer.display), "1 2 8 \n")
 
-    def test_oldRemove(self):
-        self.assertEqual(self.buffer._oldRemove(5), False)
-        self.assertEqual(self.buffer._oldRemove(9), True)
-        self.assertEqual(self.buffer.locationOf(9), -1)
-        self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
-        self.assertEqual(read(self.buffer.display), "1 8 2 \n")
-
-    def test_oldStableRemove(self):
-        self.assertEqual(self.buffer._oldStableRemove(5), False)
-        self.assertEqual(self.buffer._oldStableRemove(9), True)
-        self.assertEqual(self.buffer.locationOf(9), -1)
-        self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
-        self.assertEqual(read(self.buffer.display), "1 2 8 \n")
-
-
     def test_all(self):
         # ignore the setUp method, create a new BufferArray object
-        b = BufferArray()
+        b = BufferArray(buffer_size=8)
 
         # check initialized correctly
         # should have 8 elements, all set to zero
         self.assertEqual(b._BufferArray__numberOfElements, 0)
-        self.assertEqual(b._BufferArray__BUFFER_SIZE, 8)
         self.assertEqual(b._BufferArray__intArray, [0, 0, 0, 0, 0, 0, 0, 0])
 
         # should print no elements since 0 = null for this exercise
@@ -146,7 +123,7 @@ class BufferArrayMain(unittest.TestCase):
 
         # should remove() first element, replacing it with the last element
         # so that the buffer changes from "1 9 2 8" to the resulting "8 9 2"
-        self.assertEqual(b.remove(1), True)
+        self.assertEqual(b.fastRemove(1), True)
         self.assertEqual(b._BufferArray__numberOfElements, 3)
         self.assertEqual(read(b.display), "8 9 2 \n")
 
@@ -161,10 +138,6 @@ class BufferArrayMain(unittest.TestCase):
         self.assertEqual(b.insert(5), True)
         self.assertEqual(read(b.display), "9 2 5 \n")
         self.assertEqual(b._BufferArray__numberOfElements, 3)
-
-def run_tests():
-    suite = unittest.TestLoader().loadTestsFromTestCase(BufferArrayMain)
-    unittest.TextTestRunner(verbosity=2).run(suite)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2, failfast=True)
