@@ -6,17 +6,23 @@ This package contains solutions and implementations for the assignments in the C
 
 ```
 .
-├── docs/
+├── docs/...
 ├── src/
 │   └── cisc0503_dsa/
-│       ├── __init__.py
-│       └── buffer.py
-├── tests/
-│   └── tests.py
+│       ├── buffer.py
+│       ├── buffer_ext.py
+│       └── sorted_buffer.py
+├── tests/...
+├── build.sh
 ├── LICENSE
 ├── README.md
+├── requirements.txt
 └── pyproject.toml
 ```
+
+## Assignments
+
+Each assignment in the course corresponds to a tagged release in this repository. For example, the solutions for the first assignment can be found under the `assignment-01` tag.
 
 ## Installation
 
@@ -47,18 +53,23 @@ python -m unittest discover tests
 To build the documentation, you can use the following command:
 
 ```
-#  pdoc --html --force --output-dir ./docs ./src/cisc0503_dsa
+pdoc --html --force --output-dir ./docs ./src/
 ```
 
 Note: The documentation is already built and included in the `docs` directory. Building it from source requires the `pdoc3` package, which can be installed using pip:
 
 ```
-pip install pdoc3
+pip install pdoc3 # to install the latest pdoc3 from PyPI
+pip install -r requirements.txt # to install the exact version used in this project
 ```
 
-## Assignments
+## Building the Project
 
-Each assignment in the course corresponds to a tagged release in this repository. For example, the solutions for the first assignment can be found under the `assignment-01` tag.
+To test the project and build docs in one go in a *nix OS, you can use the `build.sh` script:
+
+```
+./build.sh
+```
 
 ## License
 
