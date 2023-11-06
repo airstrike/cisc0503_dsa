@@ -1,4 +1,5 @@
 import os
+import random
 import sys
 import unittest
 
@@ -107,6 +108,44 @@ class SortedBufferArrayWithDupsTest(unittest.TestCase):
         """ Ensure fastRemove throws an error on a sorted buffer. """
         with self.assertRaises(NotImplementedError):
             self.buffer.fastRemove(4)
+
+class SortedBuffersFuzzyTest(unittest.TestCase):
+    """ Test both SortedBufferArray classes with a large number of random values. """
+
+    def setUp(self):
+        """ Create a SortedBufferArrayNoDups object with unique values in it. """
+        self.size = random.randint(1, 10) * 2 # even number to make tests easier
+        self.nodups = SortedBufferArrayNoDups(buffer_size=self.size)
+        self.dups = SortedBufferArrayWithDups(buffer_size=self.size)
+
+    def test_insert_no_dups(self):
+        """ Ensure no duplicate values can be inserted and the buffer remains sorted. """
+        # Randomly generate unique values
+        values = [i for i in range(1, self.size * 2)]
+        random_values = random.sample(values, self.size)
+        
+        # insert all n random values
+        for value in random_values:
+            self.assertTrue(self.nodups.insert(value))
+            self.assertFalse(self.nodups.insert(value))
+
+        # fail when trying to insert one more value
+        self.assertFalse(self.nodups.insert(-100)) # we know -100 is not in the buffer
+
+    def test_insert_with_dups(self):
+        """ Ensure no duplicate values can be inserted and the buffer remains sorted. """
+        # Randomly generate unique values
+        values = [i for i in range(1, self.size * 2)]
+        random_values = random.sample(values, self.size)
+        
+        # insert half of the n random values, twice each
+        for (i, value) in enumerate(random_values):
+            if i % 2 == 0:
+                self.assertTrue(self.dups.insert(value))
+                self.assertTrue(self.dups.insert(value))
+
+        # fail when trying to insert one more value
+        self.assertFalse(self.dups.insert(-100)) # we know -100 is not in the buffer
 
 
 if __name__ == "__main__":
