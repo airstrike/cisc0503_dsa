@@ -48,6 +48,13 @@ To run the tests, you can use the following command:
 python -m unittest discover tests
 ```
 
+or simply run the `tests.py` file:
+
+```
+python -m tests
+```
+
+
 ## Building the Documentation
 
 To build the documentation, you can use the following command:
@@ -74,4 +81,3 @@ To test the project and build docs in one go in a *nix OS, you can use the `buil
 ## License
 
 This project is licensed under the "unlicense" terms of the included LICENSE file.
-
