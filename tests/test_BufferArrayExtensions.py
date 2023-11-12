@@ -162,5 +162,11 @@ class BufferArrayWithDupsTest(unittest.TestCase):
         # Ensure buffer size doesn't decrease
         self.assertEqual(self.buffer._BufferArray__numberOfElements, 3)
 
-if __name__ == "__main__":
+    def test_findAll(self):
+        """ Ensure findAll returns the correct number of occurrences. """
+        self.assertEqual(self.buffer.findAll(1), 1)
+        self.assertEqual(self.buffer.findAll(9), 2)
+        self.assertEqual(self.buffer.findAll(5), 0)
+
+if __name__ == "__main__": # pragma: no cover
     unittest.main()

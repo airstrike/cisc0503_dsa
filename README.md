@@ -42,25 +42,46 @@ from cisc0503_dsa import BufferArray
 
 ## Testing
 
-To run the tests, you can use the following command:
+To run all tests, you can use the following command:
 
 ```
 python -m unittest discover tests
 ```
 
-or simply run the `tests.py` file:
+You may also run individual tests by specifying the test file name. For example,
+to run the tests for the `Stack` class, you can cd into the `tests` directory and
+use the following command:
 
 ```
-python -m tests
+python -m test_Stack
 ```
 
+Each test file generally tests only one set of class variants. For example,
+the `test_SortedBufferArray` file tests "sorted buffers" classes, which are
+`SortedBufferArrayWithDups` and `SortedBufferArrayNoDups`. Tests for the base
+`BufferArray` class are in the `test_BufferArray` file.
+
+## Test Coverage
+
+To generate a coverage report after running tests, run the following command:
+
+```
+coverage html --directory ./html/coverage
+```
+
+The test coverage requires the `coverage` package, which can be installed using pip
+with the following command:
+
+```
+pip install coverage
+```
 
 ## Building the Documentation
 
 To build the documentation, you can use the following command:
 
 ```
-pdoc --html --force --output-dir ./docs ./src/
+pdoc --html --force --output-dir ./html/docs ./src/
 ```
 
 Note: The documentation is already built and included in the `docs` directory. Building it from source requires the `pdoc3` package, which can be installed using pip:
@@ -72,7 +93,8 @@ pip install -r requirements.txt # to install the exact version used in this proj
 
 ## Building the Project
 
-To test the project and build docs in one go in a *nix OS, you can use the `build.sh` script:
+To test the project, build docs and report coverage in one go in a *nix OS, you can
+use the `build.sh` script:
 
 ```
 ./build.sh

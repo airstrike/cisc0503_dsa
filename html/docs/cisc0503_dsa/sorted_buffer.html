@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>src.cisc0503_dsa.sorted_buffer API documentation</title>
+<title>cisc0503_dsa.sorted_buffer API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>src.cisc0503_dsa.sorted_buffer</code></h1>
+<h1 class="title">Module <code>cisc0503_dsa.sorted_buffer</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -29,7 +29,7 @@
 <pre><code class="python">try:
     from .buffer import BufferArray
     from .buffer_ext import BufferArrayNoDups, BufferArrayWithDups
-except ImportError:
+except ImportError: # pragma: no cover
     from buffer import BufferArray
     from buffer_ext import BufferArrayNoDups, BufferArrayWithDups
 
@@ -171,7 +171,7 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups"><code class="flex name class">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups"><code class="flex name class">
 <span>class <span class="ident">SortedBufferArrayNoDups</span></span>
 <span>(</span><span>buffer_size: int, native=False)</span>
 </code></dt>
@@ -255,16 +255,16 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#src.cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></li>
-<li><a title="src.cisc0503_dsa.buffer.BufferArray" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray">BufferArray</a></li>
+<li><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></li>
+<li><a title="cisc0503_dsa.buffer.BufferArray" href="buffer.html#cisc0503_dsa.buffer.BufferArray">BufferArray</a></li>
 </ul>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups">SortedBufferArrayWithDups</a></li>
+<li><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups">SortedBufferArrayWithDups</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.insert"><code class="name flex">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.insert"><code class="name flex">
 <span>def <span class="ident">insert</span></span>(<span>self, value: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -321,7 +321,7 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
     return True</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf"><code class="name flex">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf"><code class="name flex">
 <span>def <span class="ident">locationOf</span></span>(<span>self, target: int) ‑> int</span>
 </code></dt>
 <dd>
@@ -357,7 +357,7 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
     return -1</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove"><code class="name flex">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove"><code class="name flex">
 <span>def <span class="ident">stableRemove</span></span>(<span>self, value: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -395,16 +395,16 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#src.cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></b></code>:
+<li><code><b><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></b></code>:
 <ul class="hlist">
-<li><code><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups.display" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups.fastRemove" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray.fastRemove">fastRemove</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups.find" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups.display" href="buffer.html#cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups.fastRemove" href="buffer.html#cisc0503_dsa.buffer.BufferArray.fastRemove">fastRemove</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups.find" href="buffer.html#cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
 </ul>
 </li>
 </ul>
 </dd>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups"><code class="flex name class">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups"><code class="flex name class">
 <span>class <span class="ident">SortedBufferArrayWithDups</span></span>
 <span>(</span><span>buffer_size: int, native=False)</span>
 </code></dt>
@@ -472,13 +472,13 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups">SortedBufferArrayNoDups</a></li>
-<li><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#src.cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></li>
-<li><a title="src.cisc0503_dsa.buffer.BufferArray" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray">BufferArray</a></li>
+<li><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups">SortedBufferArrayNoDups</a></li>
+<li><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></li>
+<li><a title="cisc0503_dsa.buffer.BufferArray" href="buffer.html#cisc0503_dsa.buffer.BufferArray">BufferArray</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.findAll"><code class="name flex">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.findAll"><code class="name flex">
 <span>def <span class="ident">findAll</span></span>(<span>self, target: int) ‑> int</span>
 </code></dt>
 <dd>
@@ -498,7 +498,7 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
     return count</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.insert"><code class="name flex">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.insert"><code class="name flex">
 <span>def <span class="ident">insert</span></span>(<span>self, value: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -550,7 +550,7 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
     return True</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.stableRemoveAll"><code class="name flex">
+<dt id="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.stableRemoveAll"><code class="name flex">
 <span>def <span class="ident">stableRemoveAll</span></span>(<span>self, target: int) ‑> int</span>
 </code></dt>
 <dd>
@@ -576,13 +576,13 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
 </dl>
 <h3>Inherited members</h3>
 <ul class="hlist">
-<li><code><b><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups">SortedBufferArrayNoDups</a></b></code>:
+<li><code><b><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups">SortedBufferArrayNoDups</a></b></code>:
 <ul class="hlist">
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.display" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.fastRemove" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray.fastRemove">fastRemove</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.find" href="buffer.html#src.cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf">locationOf</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove">stableRemove</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.display" href="buffer.html#cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.fastRemove" href="buffer.html#cisc0503_dsa.buffer.BufferArray.fastRemove">fastRemove</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.find" href="buffer.html#cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf">locationOf</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove">stableRemove</a></code></li>
 </ul>
 </li>
 </ul>
@@ -598,25 +598,25 @@ class SortedBufferArrayWithDups(SortedBufferArrayNoDups):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src.cisc0503_dsa" href="index.html">src.cisc0503_dsa</a></code></li>
+<li><code><a title="cisc0503_dsa" href="index.html">cisc0503_dsa</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups">SortedBufferArrayNoDups</a></code></h4>
+<h4><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups">SortedBufferArrayNoDups</a></code></h4>
 <ul class="">
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.insert" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.insert">insert</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf">locationOf</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove">stableRemove</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.insert" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.insert">insert</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.locationOf">locationOf</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayNoDups.stableRemove">stableRemove</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups">SortedBufferArrayWithDups</a></code></h4>
+<h4><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups">SortedBufferArrayWithDups</a></code></h4>
 <ul class="">
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.findAll" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.findAll">findAll</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.insert" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.insert">insert</a></code></li>
-<li><code><a title="src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.stableRemoveAll" href="#src.cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.stableRemoveAll">stableRemoveAll</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.findAll" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.findAll">findAll</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.insert" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.insert">insert</a></code></li>
+<li><code><a title="cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.stableRemoveAll" href="#cisc0503_dsa.sorted_buffer.SortedBufferArrayWithDups.stableRemoveAll">stableRemoveAll</a></code></li>
 </ul>
 </li>
 </ul>

@@ -1,6 +1,6 @@
 try:
     from .buffer import BufferArray
-except ImportError:
+except ImportError: # pragma: no cover
     from buffer import BufferArray
 
 class BufferArrayNoDups(BufferArray):
@@ -29,7 +29,7 @@ class BufferArrayWithDups(BufferArray):
         
         """
         count = 0
-        for value in self.__intArray:
+        for value in self._BufferArray__intArray:
             if value == target:
                 count += 1
         return count

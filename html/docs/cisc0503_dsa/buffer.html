@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.10.0" />
-<title>src.cisc0503_dsa.buffer API documentation</title>
+<title>cisc0503_dsa.buffer API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>src.cisc0503_dsa.buffer</code></h1>
+<h1 class="title">Module <code>cisc0503_dsa.buffer</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -72,13 +72,13 @@ class BufferArray:
             self.__intArray.count = None
             self.__intArray.__str__ = None
 
-    def __str__(self):
+    def __str__(self): # pragma: no cover
         &#34;&#34;&#34;Representation of the BufferArray (as a string)
         
         For debugging purposes only, not used anywhere.
 
         Example in the Python shell:
-        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; from buffer import *
         &gt;&gt;&gt; b = BufferArray()
         &gt;&gt;&gt; b.insert(1)
         True
@@ -90,13 +90,13 @@ class BufferArray:
         # alternatively one could do:
         # return &#39;%s&#39; % self.display()
 
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         &#34;&#34;&#34;Representation of the BufferArray object
         
         For debugging purposes only, not used anywhere.
 
         Example in the Python shell:
-        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; from buffer import *
         &gt;&gt;&gt; b = BufferArray()
         &gt;&gt;&gt; b.insert(1)
         True
@@ -106,7 +106,7 @@ class BufferArray:
         &#34;&#34;&#34;
         realElements = self.__intArray[:self.__numberOfElements]
         staleElements = self.__intArray[self.__numberOfElements:]
-        return f&#39;BufferArray({realElements}) {staleElements}&#39;
+        return f&#39;{self.__class__.__name__}({realElements}) {staleElements}&#39;
 
     def display(self):
         &#34;&#34;&#34;Displays the contents of the buffer.
@@ -223,7 +223,7 @@ class BufferArray:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="src.cisc0503_dsa.buffer.BufferArray"><code class="flex name class">
+<dt id="cisc0503_dsa.buffer.BufferArray"><code class="flex name class">
 <span>class <span class="ident">BufferArray</span></span>
 <span>(</span><span>buffer_size: int, native=False)</span>
 </code></dt>
@@ -274,13 +274,13 @@ class BufferArray:
             self.__intArray.count = None
             self.__intArray.__str__ = None
 
-    def __str__(self):
+    def __str__(self): # pragma: no cover
         &#34;&#34;&#34;Representation of the BufferArray (as a string)
         
         For debugging purposes only, not used anywhere.
 
         Example in the Python shell:
-        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; from buffer import *
         &gt;&gt;&gt; b = BufferArray()
         &gt;&gt;&gt; b.insert(1)
         True
@@ -292,13 +292,13 @@ class BufferArray:
         # alternatively one could do:
         # return &#39;%s&#39; % self.display()
 
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         &#34;&#34;&#34;Representation of the BufferArray object
         
         For debugging purposes only, not used anywhere.
 
         Example in the Python shell:
-        &gt;&gt;&gt; from one import *
+        &gt;&gt;&gt; from buffer import *
         &gt;&gt;&gt; b = BufferArray()
         &gt;&gt;&gt; b.insert(1)
         True
@@ -308,7 +308,7 @@ class BufferArray:
         &#34;&#34;&#34;
         realElements = self.__intArray[:self.__numberOfElements]
         staleElements = self.__intArray[self.__numberOfElements:]
-        return f&#39;BufferArray({realElements}) {staleElements}&#39;
+        return f&#39;{self.__class__.__name__}({realElements}) {staleElements}&#39;
 
     def display(self):
         &#34;&#34;&#34;Displays the contents of the buffer.
@@ -417,12 +417,12 @@ class BufferArray:
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="src.cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#src.cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></li>
-<li><a title="src.cisc0503_dsa.buffer_ext.BufferArrayWithDups" href="buffer_ext.html#src.cisc0503_dsa.buffer_ext.BufferArrayWithDups">BufferArrayWithDups</a></li>
+<li><a title="cisc0503_dsa.buffer_ext.BufferArrayNoDups" href="buffer_ext.html#cisc0503_dsa.buffer_ext.BufferArrayNoDups">BufferArrayNoDups</a></li>
+<li><a title="cisc0503_dsa.buffer_ext.BufferArrayWithDups" href="buffer_ext.html#cisc0503_dsa.buffer_ext.BufferArrayWithDups">BufferArrayWithDups</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="src.cisc0503_dsa.buffer.BufferArray.display"><code class="name flex">
+<dt id="cisc0503_dsa.buffer.BufferArray.display"><code class="name flex">
 <span>def <span class="ident">display</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -454,7 +454,7 @@ from the assignment prompt.</p></div>
     print(&#39;&#39;)</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.buffer.BufferArray.fastRemove"><code class="name flex">
+<dt id="cisc0503_dsa.buffer.BufferArray.fastRemove"><code class="name flex">
 <span>def <span class="ident">fastRemove</span></span>(<span>self, target: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -492,7 +492,7 @@ replacing it with the last element in the buffer.</p>
     return False</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.buffer.BufferArray.find"><code class="name flex">
+<dt id="cisc0503_dsa.buffer.BufferArray.find"><code class="name flex">
 <span>def <span class="ident">find</span></span>(<span>self, target: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -523,7 +523,7 @@ replacing it with the last element in the buffer.</p>
     return True if self.locationOf(target) != -1 else False</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.buffer.BufferArray.insert"><code class="name flex">
+<dt id="cisc0503_dsa.buffer.BufferArray.insert"><code class="name flex">
 <span>def <span class="ident">insert</span></span>(<span>self, value: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -558,7 +558,7 @@ replacing it with the last element in the buffer.</p>
     return True</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.buffer.BufferArray.locationOf"><code class="name flex">
+<dt id="cisc0503_dsa.buffer.BufferArray.locationOf"><code class="name flex">
 <span>def <span class="ident">locationOf</span></span>(<span>self, target: int) ‑> int</span>
 </code></dt>
 <dd>
@@ -592,7 +592,7 @@ replacing it with the last element in the buffer.</p>
     return -1</code></pre>
 </details>
 </dd>
-<dt id="src.cisc0503_dsa.buffer.BufferArray.stableRemove"><code class="name flex">
+<dt id="cisc0503_dsa.buffer.BufferArray.stableRemove"><code class="name flex">
 <span>def <span class="ident">stableRemove</span></span>(<span>self, target: int) ‑> bool</span>
 </code></dt>
 <dd>
@@ -657,20 +657,20 @@ maintaining the order of the buffer.</p>
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="src.cisc0503_dsa" href="index.html">src.cisc0503_dsa</a></code></li>
+<li><code><a title="cisc0503_dsa" href="index.html">cisc0503_dsa</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="src.cisc0503_dsa.buffer.BufferArray" href="#src.cisc0503_dsa.buffer.BufferArray">BufferArray</a></code></h4>
+<h4><code><a title="cisc0503_dsa.buffer.BufferArray" href="#cisc0503_dsa.buffer.BufferArray">BufferArray</a></code></h4>
 <ul class="two-column">
-<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.display" href="#src.cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.fastRemove" href="#src.cisc0503_dsa.buffer.BufferArray.fastRemove">fastRemove</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.find" href="#src.cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.insert" href="#src.cisc0503_dsa.buffer.BufferArray.insert">insert</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.locationOf" href="#src.cisc0503_dsa.buffer.BufferArray.locationOf">locationOf</a></code></li>
-<li><code><a title="src.cisc0503_dsa.buffer.BufferArray.stableRemove" href="#src.cisc0503_dsa.buffer.BufferArray.stableRemove">stableRemove</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer.BufferArray.display" href="#cisc0503_dsa.buffer.BufferArray.display">display</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer.BufferArray.fastRemove" href="#cisc0503_dsa.buffer.BufferArray.fastRemove">fastRemove</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer.BufferArray.find" href="#cisc0503_dsa.buffer.BufferArray.find">find</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer.BufferArray.insert" href="#cisc0503_dsa.buffer.BufferArray.insert">insert</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer.BufferArray.locationOf" href="#cisc0503_dsa.buffer.BufferArray.locationOf">locationOf</a></code></li>
+<li><code><a title="cisc0503_dsa.buffer.BufferArray.stableRemove" href="#cisc0503_dsa.buffer.BufferArray.stableRemove">stableRemove</a></code></li>
 </ul>
 </li>
 </ul>

@@ -139,5 +139,19 @@ class BufferArrayMain(unittest.TestCase):
         self.assertEqual(read(b.display), "9 2 5 \n")
         self.assertEqual(b._BufferArray__numberOfElements, 3)
 
-if __name__ == '__main__':
-    unittest.main(verbosity=2, failfast=True)
+class BufferArrayMainNative(BufferArrayMain):
+
+    def setUp(self):
+        """ Create a BufferArray object with some values in it, using a native
+        Python list.
+
+        This will run before each test_* method.
+
+        """
+        self.buffer = BufferArray(buffer_size=8, native=True)
+        for value in [1, 9, 2, 8]:
+            self.buffer.insert(value)
+
+
+if __name__ == '__main__': # pragma: no cover
+    unittest.main()

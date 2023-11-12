@@ -44,13 +44,13 @@ class BufferArray:
             self.__intArray.count = None
             self.__intArray.__str__ = None
 
-    def __str__(self):
+    def __str__(self): # pragma: no cover
         """Representation of the BufferArray (as a string)
         
         For debugging purposes only, not used anywhere.
 
         Example in the Python shell:
-        >>> from one import *
+        >>> from buffer import *
         >>> b = BufferArray()
         >>> b.insert(1)
         True
@@ -62,13 +62,13 @@ class BufferArray:
         # alternatively one could do:
         # return '%s' % self.display()
 
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         """Representation of the BufferArray object
         
         For debugging purposes only, not used anywhere.
 
         Example in the Python shell:
-        >>> from one import *
+        >>> from buffer import *
         >>> b = BufferArray()
         >>> b.insert(1)
         True

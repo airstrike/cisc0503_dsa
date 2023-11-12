@@ -1,7 +1,7 @@
 try:
     from .buffer import BufferArray
     from .buffer_ext import BufferArrayNoDups, BufferArrayWithDups
-except ImportError:
+except ImportError: # pragma: no cover
     from buffer import BufferArray
     from buffer_ext import BufferArrayNoDups, BufferArrayWithDups
 

@@ -104,6 +104,10 @@ class SortedBufferArrayWithDupsTest(unittest.TestCase):
         # Ensure buffer remains sorted
         self.assertTrue(all(self.buffer._BufferArray__intArray[i] <= self.buffer._BufferArray__intArray[i+1] for i in range(self.buffer._BufferArray__numberOfElements-1)))
 
+        # Test removal of nonexistent value
+        self.assertEqual(self.buffer.stableRemoveAll(4), 0)
+
+
     def test_fastRemove_throwsError(self):
         """ Ensure fastRemove throws an error on a sorted buffer. """
         with self.assertRaises(NotImplementedError):
@@ -148,5 +152,5 @@ class SortedBuffersFuzzyTest(unittest.TestCase):
         self.assertFalse(self.dups.insert(-100)) # we know -100 is not in the buffer
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     unittest.main()
