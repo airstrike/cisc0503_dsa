@@ -27,29 +27,41 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">#Queue as a class.
-
-class Queue:
+class QueueForPalindrome: # pragma: no cover
+    &#34;&#34;&#34; From the provided Que_List.py file &#34;&#34;&#34;
     def __init__(self):
         self.__elements = []
         
      # Return true if queue is empty 
-    def isEmpty(self):
+    def is_empty(self):
         return len(self.__elements) == 0
 
+    def isEmpty(self): # pragma: no cover
+        return self.is_empty()
+
     # Adds an element to this queue
-    def enque(self, e):
+    def enqueue(self, e):
         self.__elements.append(e)
+
+    def enque(self, e): # pragma: no cover
+        return self.enqueue(e)
     
     # Removes an element from this queue
-    def deque(self):
+    def dequeue(self):
         if self.getSize() == 0:
             return None
         else:
-            return self.__elements.remove( self.__elements[0] )
+            return self.__elements.remove(self.__elements[0])
+
+    def deque(self): # pragma: no cover
+        return self.dequeue()
+
+    def get_size(self):
+        return len(self.__elements)
     
     # Return the size of the queue
     def getSize(self):
-        return len(self.__elements) 
+        return self.get_size()
     
     # Returns a string representation of the queue
     def __str__(self):
@@ -61,14 +73,17 @@ class Queue:
 
     
 #Stack as a class.
-
-class Stack:
+class StackForPalindrome: # pragma: no cover
+    &#34;&#34;&#34; From the provided Stack_List.py file &#34;&#34;&#34;
     def __init__(self):
         self.__elements = []
 
     # Return true if the stack is empty
-    def isEmpty(self):
+    def is_empty(self):
         return len(self.__elements) == 0
+
+    def isEmpty(self):
+        return self.is_empty()
     
     # Returns the element at the top of the stack 
     # without removing it from the stack.
@@ -89,6 +104,13 @@ class Stack:
         else:
             del( self.__elements[len(self.__elements) - 1]) 
             return self.__elements
+        
+    # Old pop method, not used
+    # def _pop(self): # pragma: no cover
+    #     if self.isEmpty():
+    #         return None
+    #     else:
+    #         return self.__elements.remove(self.__elements[len(self.__elements) - 1])
     
     # Return the size of the stack
     def getSize(self):
@@ -111,37 +133,50 @@ class Stack:
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="cisc0503_dsa.palindrome.Queue"><code class="flex name class">
-<span>class <span class="ident">Queue</span></span>
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome"><code class="flex name class">
+<span>class <span class="ident">QueueForPalindrome</span></span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>From the provided Que_List.py file</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Queue:
+<pre><code class="python">class QueueForPalindrome: # pragma: no cover
+    &#34;&#34;&#34; From the provided Que_List.py file &#34;&#34;&#34;
     def __init__(self):
         self.__elements = []
         
      # Return true if queue is empty 
-    def isEmpty(self):
+    def is_empty(self):
         return len(self.__elements) == 0
 
+    def isEmpty(self): # pragma: no cover
+        return self.is_empty()
+
     # Adds an element to this queue
-    def enque(self, e):
+    def enqueue(self, e):
         self.__elements.append(e)
+
+    def enque(self, e): # pragma: no cover
+        return self.enqueue(e)
     
     # Removes an element from this queue
-    def deque(self):
+    def dequeue(self):
         if self.getSize() == 0:
             return None
         else:
-            return self.__elements.remove( self.__elements[0] )
+            return self.__elements.remove(self.__elements[0])
+
+    def deque(self): # pragma: no cover
+        return self.dequeue()
+
+    def get_size(self):
+        return len(self.__elements)
     
     # Return the size of the queue
     def getSize(self):
-        return len(self.__elements) 
+        return self.get_size()
     
     # Returns a string representation of the queue
     def __str__(self):
@@ -153,7 +188,7 @@ class Stack:
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="cisc0503_dsa.palindrome.Queue.deque"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.deque"><code class="name flex">
 <span>def <span class="ident">deque</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -162,14 +197,27 @@ class Stack:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def deque(self):
+<pre><code class="python">def deque(self): # pragma: no cover
+    return self.dequeue()</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.dequeue"><code class="name flex">
+<span>def <span class="ident">dequeue</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dequeue(self):
     if self.getSize() == 0:
         return None
     else:
-        return self.__elements.remove( self.__elements[0] )</code></pre>
+        return self.__elements.remove(self.__elements[0])</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Queue.enque"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.enque"><code class="name flex">
 <span>def <span class="ident">enque</span></span>(<span>self, e)</span>
 </code></dt>
 <dd>
@@ -178,11 +226,24 @@ class Stack:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def enque(self, e):
+<pre><code class="python">def enque(self, e): # pragma: no cover
+    return self.enqueue(e)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.enqueue"><code class="name flex">
+<span>def <span class="ident">enqueue</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def enqueue(self, e):
     self.__elements.append(e)</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Queue.getSize"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.getSize"><code class="name flex">
 <span>def <span class="ident">getSize</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -192,10 +253,23 @@ class Stack:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def getSize(self):
-    return len(self.__elements) </code></pre>
+    return self.get_size()</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Queue.isEmpty"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.get_size"><code class="name flex">
+<span>def <span class="ident">get_size</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_size(self):
+    return len(self.__elements)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.isEmpty"><code class="name flex">
 <span>def <span class="ident">isEmpty</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -204,14 +278,12 @@ class Stack:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def isEmpty(self):
-    return len(self.__elements) == 0</code></pre>
+<pre><code class="python">def isEmpty(self): # pragma: no cover
+    return self.is_empty()</code></pre>
 </details>
 </dd>
-</dl>
-</dd>
-<dt id="cisc0503_dsa.palindrome.Stack"><code class="flex name class">
-<span>class <span class="ident">Stack</span></span>
+<dt id="cisc0503_dsa.palindrome.QueueForPalindrome.is_empty"><code class="name flex">
+<span>def <span class="ident">is_empty</span></span>(<span>self)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -219,13 +291,32 @@ class Stack:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Stack:
+<pre><code class="python">def is_empty(self):
+    return len(self.__elements) == 0</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome"><code class="flex name class">
+<span>class <span class="ident">StackForPalindrome</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>From the provided Stack_List.py file</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class StackForPalindrome: # pragma: no cover
+    &#34;&#34;&#34; From the provided Stack_List.py file &#34;&#34;&#34;
     def __init__(self):
         self.__elements = []
 
     # Return true if the stack is empty
-    def isEmpty(self):
+    def is_empty(self):
         return len(self.__elements) == 0
+
+    def isEmpty(self):
+        return self.is_empty()
     
     # Returns the element at the top of the stack 
     # without removing it from the stack.
@@ -246,6 +337,13 @@ class Stack:
         else:
             del( self.__elements[len(self.__elements) - 1]) 
             return self.__elements
+        
+    # Old pop method, not used
+    # def _pop(self): # pragma: no cover
+    #     if self.isEmpty():
+    #         return None
+    #     else:
+    #         return self.__elements.remove(self.__elements[len(self.__elements) - 1])
     
     # Return the size of the stack
     def getSize(self):
@@ -260,7 +358,7 @@ class Stack:
 </details>
 <h3>Methods</h3>
 <dl>
-<dt id="cisc0503_dsa.palindrome.Stack.getSize"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome.getSize"><code class="name flex">
 <span>def <span class="ident">getSize</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -273,7 +371,7 @@ class Stack:
     return len(self.__elements)</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Stack.isEmpty"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome.isEmpty"><code class="name flex">
 <span>def <span class="ident">isEmpty</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -283,10 +381,23 @@ class Stack:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def isEmpty(self):
+    return self.is_empty()</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome.is_empty"><code class="name flex">
+<span>def <span class="ident">is_empty</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def is_empty(self):
     return len(self.__elements) == 0</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Stack.peek"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome.peek"><code class="name flex">
 <span>def <span class="ident">peek</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -302,7 +413,7 @@ class Stack:
         return self.__elements[len(self.__elements) - 1]</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Stack.pop"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome.pop"><code class="name flex">
 <span>def <span class="ident">pop</span></span>(<span>self)</span>
 </code></dt>
 <dd>
@@ -319,7 +430,7 @@ class Stack:
         return self.__elements</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.palindrome.Stack.push"><code class="name flex">
+<dt id="cisc0503_dsa.palindrome.StackForPalindrome.push"><code class="name flex">
 <span>def <span class="ident">push</span></span>(<span>self, value)</span>
 </code></dt>
 <dd>
@@ -351,22 +462,27 @@ class Stack:
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="cisc0503_dsa.palindrome.Queue" href="#cisc0503_dsa.palindrome.Queue">Queue</a></code></h4>
-<ul class="">
-<li><code><a title="cisc0503_dsa.palindrome.Queue.deque" href="#cisc0503_dsa.palindrome.Queue.deque">deque</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Queue.enque" href="#cisc0503_dsa.palindrome.Queue.enque">enque</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Queue.getSize" href="#cisc0503_dsa.palindrome.Queue.getSize">getSize</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Queue.isEmpty" href="#cisc0503_dsa.palindrome.Queue.isEmpty">isEmpty</a></code></li>
+<h4><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome" href="#cisc0503_dsa.palindrome.QueueForPalindrome">QueueForPalindrome</a></code></h4>
+<ul class="two-column">
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.deque" href="#cisc0503_dsa.palindrome.QueueForPalindrome.deque">deque</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.dequeue" href="#cisc0503_dsa.palindrome.QueueForPalindrome.dequeue">dequeue</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.enque" href="#cisc0503_dsa.palindrome.QueueForPalindrome.enque">enque</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.enqueue" href="#cisc0503_dsa.palindrome.QueueForPalindrome.enqueue">enqueue</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.getSize" href="#cisc0503_dsa.palindrome.QueueForPalindrome.getSize">getSize</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.get_size" href="#cisc0503_dsa.palindrome.QueueForPalindrome.get_size">get_size</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.isEmpty" href="#cisc0503_dsa.palindrome.QueueForPalindrome.isEmpty">isEmpty</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.QueueForPalindrome.is_empty" href="#cisc0503_dsa.palindrome.QueueForPalindrome.is_empty">is_empty</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="cisc0503_dsa.palindrome.Stack" href="#cisc0503_dsa.palindrome.Stack">Stack</a></code></h4>
-<ul class="">
-<li><code><a title="cisc0503_dsa.palindrome.Stack.getSize" href="#cisc0503_dsa.palindrome.Stack.getSize">getSize</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Stack.isEmpty" href="#cisc0503_dsa.palindrome.Stack.isEmpty">isEmpty</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Stack.peek" href="#cisc0503_dsa.palindrome.Stack.peek">peek</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Stack.pop" href="#cisc0503_dsa.palindrome.Stack.pop">pop</a></code></li>
-<li><code><a title="cisc0503_dsa.palindrome.Stack.push" href="#cisc0503_dsa.palindrome.Stack.push">push</a></code></li>
+<h4><code><a title="cisc0503_dsa.palindrome.StackForPalindrome" href="#cisc0503_dsa.palindrome.StackForPalindrome">StackForPalindrome</a></code></h4>
+<ul class="two-column">
+<li><code><a title="cisc0503_dsa.palindrome.StackForPalindrome.getSize" href="#cisc0503_dsa.palindrome.StackForPalindrome.getSize">getSize</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.StackForPalindrome.isEmpty" href="#cisc0503_dsa.palindrome.StackForPalindrome.isEmpty">isEmpty</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.StackForPalindrome.is_empty" href="#cisc0503_dsa.palindrome.StackForPalindrome.is_empty">is_empty</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.StackForPalindrome.peek" href="#cisc0503_dsa.palindrome.StackForPalindrome.peek">peek</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.StackForPalindrome.pop" href="#cisc0503_dsa.palindrome.StackForPalindrome.pop">pop</a></code></li>
+<li><code><a title="cisc0503_dsa.palindrome.StackForPalindrome.push" href="#cisc0503_dsa.palindrome.StackForPalindrome.push">push</a></code></li>
 </ul>
 </li>
 </ul>
