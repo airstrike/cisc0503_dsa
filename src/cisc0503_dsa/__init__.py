@@ -3,3 +3,5 @@ from .buffer_ext import BufferArrayNoDups, BufferArrayWithDups
 from .sorted_buffer import SortedBufferArrayNoDups, SortedBufferArrayWithDups
 from .stack import Stack, BoundStack, ThresholdStack
 from .queue import Queue
+
+from .postfix import infix_to_postfix, postfix_eval
