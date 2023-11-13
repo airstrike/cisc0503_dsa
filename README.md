@@ -6,12 +6,15 @@ This package contains solutions and implementations for the assignments in the C
 
 ```
 .
-├── docs/...
+├── html/...
+│   ├── coverage/
+│   ├── docs/
+│   └── index.html
 ├── src/
 │   └── cisc0503_dsa/
 │       ├── buffer.py
-│       ├── buffer_ext.py
-│       └── sorted_buffer.py
+│       ├── stack.py
+│       └── ...other modules
 ├── tests/...
 ├── build.sh
 ├── LICENSE
