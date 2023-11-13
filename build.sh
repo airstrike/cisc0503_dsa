@@ -1,14 +1,18 @@
 #!/bin/bash
 
-# Description: Build script for the assignments project.
-
+# Description: Build script for the cisc0503 data structures and algorithms project.
 echo "Building project"
 
-# Check for verbose flag
+# Check for verbose and open-docs flags
 VERBOSE=0
-if [ "$1" == "-v" ] || [ "$1" == "--verbose" ]; then
-    VERBOSE=1
-fi
+OPEN_DOCS=0
+for arg in "$@"; do
+    if [ "$arg" == "-v" ] || [ "$arg" == "--verbose" ]; then
+        VERBOSE=1
+    elif [ "$arg" == "--open-docs" ]; then
+        OPEN_DOCS=1
+    fi
+done
 
 # Define arrays for task names and their corresponding commands
 task_names=("Unit tests" "Coverage report" "Documentation")
@@ -60,3 +64,8 @@ for (( i=0; i<${task_count}; i++ )); do
     fi
     run_task "${task_names[i]}" "${commands[i]}" "$last_task"
 done
+
+# Open documentation if flag is set
+if [ $OPEN_DOCS -eq 1 ]; then
+    open ./html/index.html
+fi
