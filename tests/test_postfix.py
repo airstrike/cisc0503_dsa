@@ -11,8 +11,8 @@ class TestPostfix(unittest.TestCase):
 
     def setUp(self):
         self.expressions = [
-            # ("1", "1", 1),
-            # ("* 3", "3 *", 3),
+            ("a + b - c * d / e ^ f", "a b + c d * e f ^ / -", None),
+            ("a + 1 - 0", "a 1 + 0 -", None),
             ("1 - 2", "1 2 -", -1),
             ("1 * 2 - 3", "1 2 * 3 -", -1),
             ("2 / 1 ^ 3", "2 1 3 ^ /", 2),

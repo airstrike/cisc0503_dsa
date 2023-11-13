@@ -85,7 +85,10 @@ def postfix_eval(postfix: str) -&gt; int:
         if token in OPERATORS:
             operand2 = stack.pop()
             operand1 = stack.pop()
-            stack.push(apply_operator(token, int(operand1), int(operand2)))
+            try:
+                stack.push(apply_operator(token, int(operand1), int(operand2)))
+            except (TypeError, ValueError):
+                stack.push(None)
         else:
             stack.push(token)
 
@@ -110,6 +113,8 @@ def tokenize(expr: str) -&gt; list:
                 yield int(number)  # Yield the accumulated number
                 number = &#39;&#39;  # Reset for the next number
             if char in OPERATORS or char in PARENS:
+                yield char
+            elif char.isalpha():
                 yield char
             elif char == &#34; &#34;:
                 continue  # Ignore spaces
@@ -281,7 +286,10 @@ int: The result of the postfix expression.</p></div>
         if token in OPERATORS:
             operand2 = stack.pop()
             operand1 = stack.pop()
-            stack.push(apply_operator(token, int(operand1), int(operand2)))
+            try:
+                stack.push(apply_operator(token, int(operand1), int(operand2)))
+            except (TypeError, ValueError):
+                stack.push(None)
         else:
             stack.push(token)
 
@@ -320,6 +328,8 @@ Generator: Yields tokens one at a time.</p></div>
                 yield int(number)  # Yield the accumulated number
                 number = &#39;&#39;  # Reset for the next number
             if char in OPERATORS or char in PARENS:
+                yield char
+            elif char.isalpha():
                 yield char
             elif char == &#34; &#34;:
                 continue  # Ignore spaces

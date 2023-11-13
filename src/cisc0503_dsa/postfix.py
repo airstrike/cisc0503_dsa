@@ -54,7 +54,10 @@ def postfix_eval(postfix: str) -> int:
         if token in OPERATORS:
             operand2 = stack.pop()
             operand1 = stack.pop()
-            stack.push(apply_operator(token, int(operand1), int(operand2)))
+            try:
+                stack.push(apply_operator(token, int(operand1), int(operand2)))
+            except (TypeError, ValueError):
+                stack.push(None)
         else:
             stack.push(token)
 
@@ -79,6 +82,8 @@ def tokenize(expr: str) -> list:
                 yield int(number)  # Yield the accumulated number
                 number = ''  # Reset for the next number
             if char in OPERATORS or char in PARENS:
+                yield char
+            elif char.isalpha():
                 yield char
             elif char == " ":
                 continue  # Ignore spaces
