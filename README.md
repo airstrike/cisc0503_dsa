@@ -31,6 +31,8 @@ Each assignment in the course corresponds to a tagged release in this repository
 
 To install the package, you can use pip or simply copy the contents of the `src/cisc0503_dsa` directory into your project.
 
+*Note: The package is not currently available on PyPI. I'll upload it when I have some extra time...*
+
 ```
 pip install cisc0503_dsa
 ```
@@ -46,6 +48,12 @@ from cisc0503_dsa import BufferArray
 ## Testing
 
 To run all tests, you can use the following command:
+
+```
+coverage run -m unittest discover tests
+```
+
+Or if you don't have `coverage` installed, simply:
 
 ```
 python -m unittest discover tests
@@ -66,7 +74,7 @@ the `test_SortedBufferArray` file tests "sorted buffers" classes, which are
 
 ## Test Coverage
 
-To generate a coverage report after running tests, run the following command:
+To generate a coverage report after running tests with `coverage`, run the following command:
 
 ```
 coverage html --directory ./html/coverage
@@ -101,6 +109,18 @@ use the `build.sh` script:
 
 ```
 ./build.sh
+```
+
+If the build process fails, pass the `--verbose` flag to figure out why:
+
+```
+./build.sh --verbose
+```
+
+Mac OS: You may also pass an `--open-docs` flag to open the generated docs in your default browser:
+
+```
+./build.sh --open-docs # this simply calls "open ./html/index.html"
 ```
 
 ## License
