@@ -15,10 +15,11 @@ for arg in "$@"; do
 done
 
 # Define arrays for task names and their corresponding commands
-task_names=("Unit tests" "Coverage report" "Documentation")
+task_names=("Unit tests" "Coverage report" "Clean coverage files" "Documentation")
 commands=(
     "coverage run -m unittest discover tests"
     "coverage html --directory ./html/coverage"
+    "python clean_coverage.py"
     "pdoc3 --html --force --output-dir ./html/docs ./src/cisc0503_dsa"
 )
 
