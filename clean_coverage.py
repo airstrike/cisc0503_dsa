@@ -1,9 +1,17 @@
+from datetime import datetime, timezone
+
 import os
 import re
 
 def clean_coverage_files(directory):
     # Regex pattern to match the filenames
     pattern = re.compile(r'd_[0-9a-zA-Z]{16}_')
+    timestamp_pattern = re.compile(r'created at \d{4}-\d{2}-\d{2} \d{2}:\d{2} [-+]\d{4}')
+    timestamp_tag_pattern = re.compile(r'<p id="timestamp">.*?</p>')
+
+    # Get the current timestamp
+    current_timestamp = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M %z")
+    new_timestamp_tag = f'<p id="timestamp">{current_timestamp}</p>'
 
     # First, rename the files
     for filename in os.listdir(directory):
@@ -19,9 +27,19 @@ def clean_coverage_files(directory):
                 content = file.read()
 
             updated_content = pattern.sub('', content)
+            updated_content = timestamp_pattern.sub('', updated_content)
 
             with open(os.path.join(directory, filename), 'w', encoding='utf-8') as file:
                 file.write(updated_content)
+
+    # Update the index.html file
+    with open('./html/index.html', 'r', encoding='utf-8') as file:
+        index_content = file.read()
+
+    updated_index_content = timestamp_tag_pattern.sub(new_timestamp_tag, index_content)
+
+    with open('./html/index.html', 'w', encoding='utf-8') as file:
+        file.write(updated_index_content)
 
     # Replace patterns in status.json
     status_file = os.path.join(directory, 'status.json')
