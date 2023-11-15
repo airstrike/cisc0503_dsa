@@ -38,6 +38,23 @@ class LinkedList:
 
     def __len__(self):
         return self.get_size()
+
+    def __copy__(self):
+        new_list = LinkedList()
+        for element in self:
+            new_list.insert_last(element)
+        return new_list
+
+    def copy(self):
+        return self.__copy__()
+
+    def __eq__(self, other):
+        if len(self) != len(other):
+            return False
+        for element1, element2 in zip(self, other):
+            if element1 != element2:
+                return False
+        return True
     
     def get_size(self):
         return self._size
@@ -109,7 +126,7 @@ class LinkedList:
         if self._size == 0:
             return None
         elif self._size == 1:
-            self.remove_first()
+            return self.remove_first()
         else:
             current = self._head
             for i in range(self._size - 2):
@@ -150,6 +167,7 @@ class LinkedList:
             for i in range(index):
                 current = current.next
             current.element = element
+            return current.element
 
     def get_first(self):
         """Return the first element in the list.

@@ -248,3 +248,16 @@ class ThresholdStack(Stack):
     def get_size2(self):
         """Size of the stack above the threshold"""
         return self._size - self._top2 - 1
+
+class DoublePopStack(Stack):
+
+    def pop(self):
+        """Pop two elements off the stack
+
+        returns:
+            (any, any) - the top two items on the stack.
+            (any, None) - if the stack has only one element.
+            (None, None) - if the stack is empty.
+        """
+        return (super().pop(), super().pop())
+

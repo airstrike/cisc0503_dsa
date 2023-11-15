@@ -5,7 +5,7 @@ import unittest
 # Add the path to the src directory to the system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + '/src')
 
-from cisc0503_dsa import Stack, BoundStack, ThresholdStack
+from cisc0503_dsa import Stack, BoundStack, ThresholdStack, DoublePopStack
 
 class StackTest(unittest.TestCase):
     """Test the base Stack class"""
@@ -277,6 +277,27 @@ class ThresholdStackTest(unittest.TestCase):
             self.assertNotEqual(None, self.stack.pop2())
 
         self.assertTrue(self.stack.is_empty2())
+    
+class DoublePopStackTest(unittest.TestCase):
+
+    def setUp(self):
+        self.stack = DoublePopStack()
+        for value in [5, 1, 9, 2, 8]:
+            self.stack.push(value)
+
+    def test_double_pop(self):
+        self.assertEqual(self.stack.pop(), (8, 2))
+        self.assertEqual(self.stack.pop(), (9, 1))
+        self.assertEqual(self.stack.pop(), (5, None))
+        self.assertEqual(self.stack.pop(), (None, None))
+
+    def test_is_empty(self):
+        self.assertFalse(self.stack.is_empty())
+        self.stack.pop()
+        self.stack.pop()
+        self.assertFalse(self.stack.is_empty())
+        self.stack.pop()
+        self.assertTrue(self.stack.is_empty())
         
 if __name__ == "__main__": # pragma: no cover
     unittest.main()
