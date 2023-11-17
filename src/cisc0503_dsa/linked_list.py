@@ -55,24 +55,46 @@ class LinkedList:
         return self.get_size()
 
     def __copy__(self):
-        new_list = LinkedList()
+        new_list = self.__class__()
         for element in self:
-            new_list.insert_last(element)
+            new_list.add_last(element)
         return new_list
 
     def copy(self):
         return self.__copy__()
 
     def __eq__(self, other):
-        if len(self) != len(other):
+        if self._size != other._size:
             return False
-        for element1, element2 in zip(self, other):
-            if element1 != element2:
-                return False
-        return True
-    
-    def get_size(self):
-        return self._size
+        # for element1, element2 in zip(self, other):
+        #     if element1 != element2:
+        #         return False
+        head1 = self._head
+        head2 = other._head
+
+        # if self._head == self._tail and other._head == other._tail:
+        #     return True
+        
+        if hasattr(other._head, "__prev__"):
+            while head1 and head2:
+                if head1.element != head2.element or \
+                    head1.next and not head2.next or \
+                    not head1.next and head2.next or \
+                    head1.prev and not head2.prev or \
+                    not head1.prev and head2.prev:
+                    return False
+                head1 = head1.next
+                head2 = head2.next
+            return True
+        else:
+            while head1 and head2:
+                if head1.element != head2.element or \
+                    head1.next and not head2.next or \
+                    not head1.next and head2.next:
+                    return False
+                head1 = head1.next
+                head2 = head2.next
+            return True
     
     def is_empty(self) -> bool:
         """Returns True if the list is empty, False otherwise.
@@ -80,8 +102,24 @@ class LinkedList:
         """
         return len(self) == 0
 
-    def insert_first(self, element):
-        """Insert an element at the beginning of the list.
+    def insert(self, index, element):
+        """Insert an element at the specified index in the list.
+
+        """
+        if index == 0:
+            self.add_first(element)
+        elif index >= len(self):
+            self.add_last(element)
+        else:
+            one_before = self.get_node(index - 1)
+            node = self.make_node(element)
+            self._size += 1
+            node.next = one_before.next
+            one_before.next = node
+
+
+    def add_first(self, element):
+        """Add an element at the beginning of the list.
 
         """
         node = self.make_node(element)
@@ -91,8 +129,8 @@ class LinkedList:
         if self._tail is None:
             self._tail = self._head
 
-    def insert_last(self, element):
-        """Insert an element at the end of the list.
+    def add_last(self, element):
+        """Add an element at the end of the list.
 
         """
         node = self.make_node(element)
@@ -103,23 +141,6 @@ class LinkedList:
             self._tail = self._tail.next
         self._size += 1 
 
-    def insert(self, index, element):
-        """Insert an element at the specified index in the list.
-
-        """
-        if index == 0:
-            self.insert_first(element)
-        elif index >= len(self):
-            self.insert_last(element)
-        else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            temp = current.next
-            current.next = self.make_node(element)
-            current.next.next = temp
-            self._size += 1
-
     def remove_first(self):
         """Remove the first element in the list.
 
@@ -127,12 +148,12 @@ class LinkedList:
         if self._size == 0:
             return False
         else:
-            temp = self._head
+            node = self._head
             self._head = self._head.next
             self._size -= 1
             if self._head is None:
                 self._tail = None
-            return True
+            return node.element
 
     def remove_last(self):
         """Remove the last element in the list.
@@ -143,16 +164,14 @@ class LinkedList:
         elif self._size == 1:
             return self.remove_first()
         else:
-            current = self._head
-            for i in range(self._size - 2):
-                current = current.next
-            temp = self._tail
-            self._tail = current
-            self._tail.next = None
+            old_tail = self._tail
+            new_tail = self.get_node(self._size - 2)
+            new_tail.next = None
+            self._tail = new_tail
             self._size -= 1
-            return True
+            return old_tail.element
 
-    def remove(self, index):
+    def removeAt(self, index):
         """Remove the element at the specified index in the list.
 
         """
@@ -163,13 +182,25 @@ class LinkedList:
         elif index == self._size - 1:
             return self.remove_last()
         else:
-            previous = self._head
-            for i in range(1, index):
-                previous = previous.next
-            current = previous.next
-            previous.next = current.next
+            previous_node = self.get_node(index - 1)
+            node = previous_node.next
+            previous_node.next = node.next
             self._size -= 1
-            return True
+            return node.element
+
+    def remove(self, element):
+        """Remove the specified element if it is in the list.
+
+        args:
+            element - the element to remove.
+        return:
+            bool - True if the element was removed, False otherwise.
+        """
+        index = self.indexOf(element)
+        if index == -1:
+            return False
+        else:
+            return self.removeAt(index)
 
     def set(self, index, element):
         """Set the element at the specified index in the list.
@@ -178,11 +209,9 @@ class LinkedList:
         if index < 0 or index >= self._size:
             return None
         else:
-            current = self._head
-            for i in range(index):
-                current = current.next
-            current.element = element
-            return current.element
+            node = self.get_node(index)
+            node.element = element
+            return node.element
 
     def get_first(self):
         """Return the first element in the list.
@@ -209,10 +238,8 @@ class LinkedList:
         if index < 0 or index >= self._size:
             return None
         else:
-            current = self._head
-            for i in range(index):
-                current = current.next
-            return current.element
+            node = self.get_node(index)
+            return node.element
 
     def __getitem__(self, index):
         """Return the element at the specified index in the list.
@@ -256,7 +283,7 @@ class LinkedList:
 
         args:
             element - the element to search for.
-            direction - the direction to traverse the list. 1 for forward, -1 for backward.
+            reverse - the direction to traverse the list. True for backward, False for forward.
         """
         index = -1
         for i, current in enumerate(self.traverse()):
@@ -267,6 +294,74 @@ class LinkedList:
                 index = i
         return index
 
+    def clear(self):
+        """Clear the entire list
+        """
+        self._head = None
+        self._tail = None
+        self._size = 0
+
+    # from Midterm question
+    def countList(self):
+        current = self._head
+        count = 0
+        while current != None:
+            count += 1
+            current = current.next
+        return count
+
+    def filter(self, element):
+        """Return a list of indices of all matching elements in the list.
+
+        """
+        for i, current in enumerate(self.traverse()):
+            if current == element:
+                yield i
+
+    def get_node(self, index):
+        """Return the node at the specified index in the list.
+
+        """
+        if index < 0 or index >= self._size:
+            return None
+        else:
+            current = self._head
+            for _ in range(index):
+                current = current.next
+            return current
+
+    # Aliases
+    def add(self, element): # pragma: no cover
+        """Same as add_last() per requirements.
+        """
+        self.add_last(element)
+
+    def addLast(self, element): # pragma: no cover
+        self.add_last(element)
+
+    def addFirst(self, element): # pragma: no cover
+        self.add_first(element)
+
+    def removeLast(self): # pragma: no cover
+        return self.remove_last()
+
+    def removeFirst(self): # pragma: no cover
+        return self.remove_first()
+
+    def getFirst(self): # pragma: no cover
+        return self.get_first()
+    
+    def getLast(self): # pragma: no cover
+        return self.get_last()
+
+    def getSize(self): # pragma: no cover
+        return self.get_size()
+
+    def get_size(self): # pragma: no cover
+        return self._size
+
+    def isEmpty(self) -> bool: # pragma: no cover
+        return self.is_empty()
 
 class DoublyLinkedList(LinkedList):
 
@@ -275,22 +370,21 @@ class DoublyLinkedList(LinkedList):
 
         """
         if index == 0:
-            self.insert_first(element)
+            self.add_first(element)
         elif index >= len(self):
-            self.insert_last(element)
+            self.add_last(element)
         else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            temp = current.next
-            current.next = self.make_node(element)
-            current.next.prev = current
-            current.next.next = temp
-            temp.prev = current.next
+            previous_node = self.get_node(index - 1)
+            next_node = previous_node.next
+            node = self.make_node(element)
             self._size += 1
+            node.next = next_node
+            node.prev = previous_node
+            previous_node.next = node
+            next_node.prev = node
 
-    def insert_first(self, index):
-        """Insert an element at the beginning of the list.
+    def add_first(self, index):
+        """Add an element at the beginning of the list.
 
         """
         node = self.make_node(index)
@@ -300,8 +394,8 @@ class DoublyLinkedList(LinkedList):
         if self._tail is None:
             self._tail = self._head
 
-    def insert_last(self, index):
-        """Insert an element at the end of the list.
+    def add_last(self, index):
+        """Add an element at the end of the list.
 
         """
         node = self.make_node(index)
@@ -313,7 +407,7 @@ class DoublyLinkedList(LinkedList):
             self._tail = self._tail.next
         self._size += 1
 
-    def remove(self, index):
+    def removeAt(self, index):
         """Remove an element from the list and update references
 
         """
@@ -324,13 +418,11 @@ class DoublyLinkedList(LinkedList):
         if index == self._size - 1:
             return self.remove_last()
         else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            current.next = current.next.next
-            current.next.prev = current
+            node = self.get_node(index)
+            node.prev.next = node.next
+            node.next.prev = node.prev
             self._size -= 1
-            return True
+            return node.element
     
     def remove_first(self):
         """Remove the first element in the list.
@@ -339,12 +431,14 @@ class DoublyLinkedList(LinkedList):
         if self._size == 0:
             return False
         else:
-            temp = self._head
+            node = self._head
             self._head = self._head.next
+            if self._head is not None:
+                self._head.prev = None
             self._size -= 1
             if self._head is None:
                 self._tail = None
-            return True
+            return node.element
 
     def remove_last(self):
         """Remove the last element in the list.
@@ -355,11 +449,11 @@ class DoublyLinkedList(LinkedList):
         elif self._size == 1:
             return self.remove_first()
         else:
-            temp = self._tail
+            node = self._tail
             self._tail = self._tail.prev
             self._tail.next = None
             self._size -= 1
-            return True
+            return node.element
 
     def traverse(self, reverse=False):
         """Iterate over the elements in the list.
@@ -385,7 +479,7 @@ class DoublyLinkedList(LinkedList):
 
         args:
             element - the element to search for.
-            direction - the direction to traverse the list. 1 for forward, -1 for backward.
+            reverse - the direction to traverse the list. True for backward, False for forward.
         """
 
         index = -1
@@ -394,9 +488,3 @@ class DoublyLinkedList(LinkedList):
                 index = self._size - i - 1 if reverse else i
                 break
         return index
-
-    def lastIndexOf(self, element):
-        """Return the index of the last matching element in the list.
-
-        """
-        return self.index(element, reverse=True)

@@ -17,6 +17,7 @@ This package contains solutions and implementations for the assignments in the C
 │       └── ...other modules
 ├── tests/...
 ├── build.sh
+├── clean_coverage.py # used by build.sh
 ├── LICENSE
 ├── README.md
 ├── requirements.txt

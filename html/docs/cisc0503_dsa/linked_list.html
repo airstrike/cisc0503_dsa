@@ -26,7 +26,7 @@
 <ul>
 <li><code><a title="cisc0503_dsa.linked_list.Node" href="#cisc0503_dsa.linked_list.Node">Node</a></code> implements a base class for a node in a linked list.</li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList" href="#cisc0503_dsa.linked_list.LinkedList">LinkedList</a></code> implements a base class for a singly linked list with standard operations.</li>
-<li><code><a title="cisc0503_dsa.linked_list.DoubleLinkedList" href="#cisc0503_dsa.linked_list.DoubleLinkedList">DoubleLinkedList</a></code> inherits from <code><a title="cisc0503_dsa.linked_list.LinkedList" href="#cisc0503_dsa.linked_list.LinkedList">LinkedList</a></code> to implement a doubly linked list with standard operations.</li>
+<li><code><a title="cisc0503_dsa.linked_list.DoublyLinkedList" href="#cisc0503_dsa.linked_list.DoublyLinkedList">DoublyLinkedList</a></code> inherits from <code><a title="cisc0503_dsa.linked_list.LinkedList" href="#cisc0503_dsa.linked_list.LinkedList">LinkedList</a></code> to implement a doubly linked list with standard operations.</li>
 </ul>
 <details class="source">
 <summary>
@@ -36,7 +36,7 @@
 
 *   `Node` implements a base class for a node in a linked list.
 *   `LinkedList` implements a base class for a singly linked list with standard operations.
-*   `DoubleLinkedList` inherits from `LinkedList` to implement a doubly linked list with standard operations.
+*   `DoublyLinkedList` inherits from `LinkedList` to implement a doubly linked list with standard operations.
 &#34;&#34;&#34;
 
 class Node:
@@ -89,24 +89,46 @@ class LinkedList:
         return self.get_size()
 
     def __copy__(self):
-        new_list = LinkedList()
+        new_list = self.__class__()
         for element in self:
-            new_list.insert_last(element)
+            new_list.add_last(element)
         return new_list
 
     def copy(self):
         return self.__copy__()
 
     def __eq__(self, other):
-        if len(self) != len(other):
+        if self._size != other._size:
             return False
-        for element1, element2 in zip(self, other):
-            if element1 != element2:
-                return False
-        return True
-    
-    def get_size(self):
-        return self._size
+        # for element1, element2 in zip(self, other):
+        #     if element1 != element2:
+        #         return False
+        head1 = self._head
+        head2 = other._head
+
+        # if self._head == self._tail and other._head == other._tail:
+        #     return True
+        
+        if hasattr(other._head, &#34;__prev__&#34;):
+            while head1 and head2:
+                if head1.element != head2.element or \
+                    head1.next and not head2.next or \
+                    not head1.next and head2.next or \
+                    head1.prev and not head2.prev or \
+                    not head1.prev and head2.prev:
+                    return False
+                head1 = head1.next
+                head2 = head2.next
+            return True
+        else:
+            while head1 and head2:
+                if head1.element != head2.element or \
+                    head1.next and not head2.next or \
+                    not head1.next and head2.next:
+                    return False
+                head1 = head1.next
+                head2 = head2.next
+            return True
     
     def is_empty(self) -&gt; bool:
         &#34;&#34;&#34;Returns True if the list is empty, False otherwise.
@@ -114,8 +136,24 @@ class LinkedList:
         &#34;&#34;&#34;
         return len(self) == 0
 
-    def insert_first(self, element):
-        &#34;&#34;&#34;Insert an element at the beginning of the list.
+    def insert(self, index, element):
+        &#34;&#34;&#34;Insert an element at the specified index in the list.
+
+        &#34;&#34;&#34;
+        if index == 0:
+            self.add_first(element)
+        elif index &gt;= len(self):
+            self.add_last(element)
+        else:
+            one_before = self.get_node(index - 1)
+            node = self.make_node(element)
+            self._size += 1
+            node.next = one_before.next
+            one_before.next = node
+
+
+    def add_first(self, element):
+        &#34;&#34;&#34;Add an element at the beginning of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(element)
@@ -125,8 +163,8 @@ class LinkedList:
         if self._tail is None:
             self._tail = self._head
 
-    def insert_last(self, element):
-        &#34;&#34;&#34;Insert an element at the end of the list.
+    def add_last(self, element):
+        &#34;&#34;&#34;Add an element at the end of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(element)
@@ -137,23 +175,6 @@ class LinkedList:
             self._tail = self._tail.next
         self._size += 1 
 
-    def insert(self, index, element):
-        &#34;&#34;&#34;Insert an element at the specified index in the list.
-
-        &#34;&#34;&#34;
-        if index == 0:
-            self.insert_first(element)
-        elif index &gt;= len(self):
-            self.insert_last(element)
-        else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            temp = current.next
-            current.next = self.make_node(element)
-            current.next.next = temp
-            self._size += 1
-
     def remove_first(self):
         &#34;&#34;&#34;Remove the first element in the list.
 
@@ -161,12 +182,12 @@ class LinkedList:
         if self._size == 0:
             return False
         else:
-            temp = self._head
+            node = self._head
             self._head = self._head.next
             self._size -= 1
             if self._head is None:
                 self._tail = None
-            return True
+            return node.element
 
     def remove_last(self):
         &#34;&#34;&#34;Remove the last element in the list.
@@ -177,16 +198,14 @@ class LinkedList:
         elif self._size == 1:
             return self.remove_first()
         else:
-            current = self._head
-            for i in range(self._size - 2):
-                current = current.next
-            temp = self._tail
-            self._tail = current
-            self._tail.next = None
+            old_tail = self._tail
+            new_tail = self.get_node(self._size - 2)
+            new_tail.next = None
+            self._tail = new_tail
             self._size -= 1
-            return True
+            return old_tail.element
 
-    def remove(self, index):
+    def removeAt(self, index):
         &#34;&#34;&#34;Remove the element at the specified index in the list.
 
         &#34;&#34;&#34;
@@ -197,13 +216,25 @@ class LinkedList:
         elif index == self._size - 1:
             return self.remove_last()
         else:
-            previous = self._head
-            for i in range(1, index):
-                previous = previous.next
-            current = previous.next
-            previous.next = current.next
+            previous_node = self.get_node(index - 1)
+            node = previous_node.next
+            previous_node.next = node.next
             self._size -= 1
-            return True
+            return node.element
+
+    def remove(self, element):
+        &#34;&#34;&#34;Remove the specified element if it is in the list.
+
+        args:
+            element - the element to remove.
+        return:
+            bool - True if the element was removed, False otherwise.
+        &#34;&#34;&#34;
+        index = self.indexOf(element)
+        if index == -1:
+            return False
+        else:
+            return self.removeAt(index)
 
     def set(self, index, element):
         &#34;&#34;&#34;Set the element at the specified index in the list.
@@ -212,11 +243,9 @@ class LinkedList:
         if index &lt; 0 or index &gt;= self._size:
             return None
         else:
-            current = self._head
-            for i in range(index):
-                current = current.next
-            current.element = element
-            return current.element
+            node = self.get_node(index)
+            node.element = element
+            return node.element
 
     def get_first(self):
         &#34;&#34;&#34;Return the first element in the list.
@@ -243,10 +272,8 @@ class LinkedList:
         if index &lt; 0 or index &gt;= self._size:
             return None
         else:
-            current = self._head
-            for i in range(index):
-                current = current.next
-            return current.element
+            node = self.get_node(index)
+            return node.element
 
     def __getitem__(self, index):
         &#34;&#34;&#34;Return the element at the specified index in the list.
@@ -290,7 +317,7 @@ class LinkedList:
 
         args:
             element - the element to search for.
-            direction - the direction to traverse the list. 1 for forward, -1 for backward.
+            reverse - the direction to traverse the list. True for backward, False for forward.
         &#34;&#34;&#34;
         index = -1
         for i, current in enumerate(self.traverse()):
@@ -301,30 +328,97 @@ class LinkedList:
                 index = i
         return index
 
+    def clear(self):
+        &#34;&#34;&#34;Clear the entire list
+        &#34;&#34;&#34;
+        self._head = None
+        self._tail = None
+        self._size = 0
 
-class DoubleLinkedList(LinkedList):
+    # from Midterm question
+    def countList(self):
+        current = self._head
+        count = 0
+        while current != None:
+            count += 1
+            current = current.next
+        return count
+
+    def filter(self, element):
+        &#34;&#34;&#34;Return a list of indices of all matching elements in the list.
+
+        &#34;&#34;&#34;
+        for i, current in enumerate(self.traverse()):
+            if current == element:
+                yield i
+
+    def get_node(self, index):
+        &#34;&#34;&#34;Return the node at the specified index in the list.
+
+        &#34;&#34;&#34;
+        if index &lt; 0 or index &gt;= self._size:
+            return None
+        else:
+            current = self._head
+            for _ in range(index):
+                current = current.next
+            return current
+
+    # Aliases
+    def add(self, element): # pragma: no cover
+        &#34;&#34;&#34;Same as add_last() per requirements.
+        &#34;&#34;&#34;
+        self.add_last(element)
+
+    def addLast(self, element): # pragma: no cover
+        self.add_last(element)
+
+    def addFirst(self, element): # pragma: no cover
+        self.add_first(element)
+
+    def removeLast(self): # pragma: no cover
+        return self.remove_last()
+
+    def removeFirst(self): # pragma: no cover
+        return self.remove_first()
+
+    def getFirst(self): # pragma: no cover
+        return self.get_first()
+    
+    def getLast(self): # pragma: no cover
+        return self.get_last()
+
+    def getSize(self): # pragma: no cover
+        return self.get_size()
+
+    def get_size(self): # pragma: no cover
+        return self._size
+
+    def isEmpty(self) -&gt; bool: # pragma: no cover
+        return self.is_empty()
+
+class DoublyLinkedList(LinkedList):
 
     def insert(self, index, element):
         &#34;&#34;&#34;Insert an element at the specified index in the list.
 
         &#34;&#34;&#34;
         if index == 0:
-            self.insert_first(element)
+            self.add_first(element)
         elif index &gt;= len(self):
-            self.insert_last(element)
+            self.add_last(element)
         else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            temp = current.next
-            current.next = self.make_node(element)
-            current.next.prev = current
-            current.next.next = temp
-            temp.prev = current.next
+            previous_node = self.get_node(index - 1)
+            next_node = previous_node.next
+            node = self.make_node(element)
             self._size += 1
+            node.next = next_node
+            node.prev = previous_node
+            previous_node.next = node
+            next_node.prev = node
 
-    def insert_first(self, index):
-        &#34;&#34;&#34;Insert an element at the beginning of the list.
+    def add_first(self, index):
+        &#34;&#34;&#34;Add an element at the beginning of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(index)
@@ -334,8 +428,8 @@ class DoubleLinkedList(LinkedList):
         if self._tail is None:
             self._tail = self._head
 
-    def insert_last(self, index):
-        &#34;&#34;&#34;Insert an element at the end of the list.
+    def add_last(self, index):
+        &#34;&#34;&#34;Add an element at the end of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(index)
@@ -347,7 +441,7 @@ class DoubleLinkedList(LinkedList):
             self._tail = self._tail.next
         self._size += 1
 
-    def remove(self, index):
+    def removeAt(self, index):
         &#34;&#34;&#34;Remove an element from the list and update references
 
         &#34;&#34;&#34;
@@ -358,13 +452,11 @@ class DoubleLinkedList(LinkedList):
         if index == self._size - 1:
             return self.remove_last()
         else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            current.next = current.next.next
-            current.next.prev = current
+            node = self.get_node(index)
+            node.prev.next = node.next
+            node.next.prev = node.prev
             self._size -= 1
-            return True
+            return node.element
     
     def remove_first(self):
         &#34;&#34;&#34;Remove the first element in the list.
@@ -373,12 +465,14 @@ class DoubleLinkedList(LinkedList):
         if self._size == 0:
             return False
         else:
-            temp = self._head
+            node = self._head
             self._head = self._head.next
+            if self._head is not None:
+                self._head.prev = None
             self._size -= 1
             if self._head is None:
                 self._tail = None
-            return True
+            return node.element
 
     def remove_last(self):
         &#34;&#34;&#34;Remove the last element in the list.
@@ -389,11 +483,11 @@ class DoubleLinkedList(LinkedList):
         elif self._size == 1:
             return self.remove_first()
         else:
-            temp = self._tail
+            node = self._tail
             self._tail = self._tail.prev
             self._tail.next = None
             self._size -= 1
-            return True
+            return node.element
 
     def traverse(self, reverse=False):
         &#34;&#34;&#34;Iterate over the elements in the list.
@@ -419,7 +513,7 @@ class DoubleLinkedList(LinkedList):
 
         args:
             element - the element to search for.
-            direction - the direction to traverse the list. 1 for forward, -1 for backward.
+            reverse - the direction to traverse the list. True for backward, False for forward.
         &#34;&#34;&#34;
 
         index = -1
@@ -427,13 +521,7 @@ class DoubleLinkedList(LinkedList):
             if current == element:
                 index = self._size - i - 1 if reverse else i
                 break
-        return index
-
-    def lastIndexOf(self, element):
-        &#34;&#34;&#34;Return the index of the last matching element in the list.
-
-        &#34;&#34;&#34;
-        return self.index(element, reverse=True)</code></pre>
+        return index</code></pre>
 </details>
 </section>
 <section>
@@ -445,8 +533,8 @@ class DoubleLinkedList(LinkedList):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="cisc0503_dsa.linked_list.DoubleLinkedList"><code class="flex name class">
-<span>class <span class="ident">DoubleLinkedList</span></span>
+<dt id="cisc0503_dsa.linked_list.DoublyLinkedList"><code class="flex name class">
+<span>class <span class="ident">DoublyLinkedList</span></span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -454,29 +542,28 @@ class DoubleLinkedList(LinkedList):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class DoubleLinkedList(LinkedList):
+<pre><code class="python">class DoublyLinkedList(LinkedList):
 
     def insert(self, index, element):
         &#34;&#34;&#34;Insert an element at the specified index in the list.
 
         &#34;&#34;&#34;
         if index == 0:
-            self.insert_first(element)
+            self.add_first(element)
         elif index &gt;= len(self):
-            self.insert_last(element)
+            self.add_last(element)
         else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            temp = current.next
-            current.next = self.make_node(element)
-            current.next.prev = current
-            current.next.next = temp
-            temp.prev = current.next
+            previous_node = self.get_node(index - 1)
+            next_node = previous_node.next
+            node = self.make_node(element)
             self._size += 1
+            node.next = next_node
+            node.prev = previous_node
+            previous_node.next = node
+            next_node.prev = node
 
-    def insert_first(self, index):
-        &#34;&#34;&#34;Insert an element at the beginning of the list.
+    def add_first(self, index):
+        &#34;&#34;&#34;Add an element at the beginning of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(index)
@@ -486,8 +573,8 @@ class DoubleLinkedList(LinkedList):
         if self._tail is None:
             self._tail = self._head
 
-    def insert_last(self, index):
-        &#34;&#34;&#34;Insert an element at the end of the list.
+    def add_last(self, index):
+        &#34;&#34;&#34;Add an element at the end of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(index)
@@ -499,7 +586,7 @@ class DoubleLinkedList(LinkedList):
             self._tail = self._tail.next
         self._size += 1
 
-    def remove(self, index):
+    def removeAt(self, index):
         &#34;&#34;&#34;Remove an element from the list and update references
 
         &#34;&#34;&#34;
@@ -510,13 +597,11 @@ class DoubleLinkedList(LinkedList):
         if index == self._size - 1:
             return self.remove_last()
         else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            current.next = current.next.next
-            current.next.prev = current
+            node = self.get_node(index)
+            node.prev.next = node.next
+            node.next.prev = node.prev
             self._size -= 1
-            return True
+            return node.element
     
     def remove_first(self):
         &#34;&#34;&#34;Remove the first element in the list.
@@ -525,12 +610,14 @@ class DoubleLinkedList(LinkedList):
         if self._size == 0:
             return False
         else:
-            temp = self._head
+            node = self._head
             self._head = self._head.next
+            if self._head is not None:
+                self._head.prev = None
             self._size -= 1
             if self._head is None:
                 self._tail = None
-            return True
+            return node.element
 
     def remove_last(self):
         &#34;&#34;&#34;Remove the last element in the list.
@@ -541,11 +628,11 @@ class DoubleLinkedList(LinkedList):
         elif self._size == 1:
             return self.remove_first()
         else:
-            temp = self._tail
+            node = self._tail
             self._tail = self._tail.prev
             self._tail.next = None
             self._size -= 1
-            return True
+            return node.element
 
     def traverse(self, reverse=False):
         &#34;&#34;&#34;Iterate over the elements in the list.
@@ -571,7 +658,7 @@ class DoubleLinkedList(LinkedList):
 
         args:
             element - the element to search for.
-            direction - the direction to traverse the list. 1 for forward, -1 for backward.
+            reverse - the direction to traverse the list. True for backward, False for forward.
         &#34;&#34;&#34;
 
         index = -1
@@ -579,13 +666,7 @@ class DoubleLinkedList(LinkedList):
             if current == element:
                 index = self._size - i - 1 if reverse else i
                 break
-        return index
-
-    def lastIndexOf(self, element):
-        &#34;&#34;&#34;Return the index of the last matching element in the list.
-
-        &#34;&#34;&#34;
-        return self.index(element, reverse=True)</code></pre>
+        return index</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -593,8 +674,8 @@ class DoubleLinkedList(LinkedList):
 </ul>
 <h3>Methods</h3>
 <dl>
-<dt id="cisc0503_dsa.linked_list.DoubleLinkedList.remove"><code class="name flex">
-<span>def <span class="ident">remove</span></span>(<span>self, index)</span>
+<dt id="cisc0503_dsa.linked_list.DoublyLinkedList.removeAt"><code class="name flex">
+<span>def <span class="ident">removeAt</span></span>(<span>self, index)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Remove an element from the list and update references</p></div>
@@ -602,7 +683,7 @@ class DoubleLinkedList(LinkedList):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def remove(self, index):
+<pre><code class="python">def removeAt(self, index):
     &#34;&#34;&#34;Remove an element from the list and update references
 
     &#34;&#34;&#34;
@@ -613,13 +694,11 @@ class DoubleLinkedList(LinkedList):
     if index == self._size - 1:
         return self.remove_last()
     else:
-        current = self._head
-        for i in range(1, index):
-            current = current.next
-        current.next = current.next.next
-        current.next.prev = current
+        node = self.get_node(index)
+        node.prev.next = node.next
+        node.next.prev = node.prev
         self._size -= 1
-        return True</code></pre>
+        return node.element</code></pre>
 </details>
 </dd>
 </dl>
@@ -627,17 +706,22 @@ class DoubleLinkedList(LinkedList):
 <ul class="hlist">
 <li><code><b><a title="cisc0503_dsa.linked_list.LinkedList" href="#cisc0503_dsa.linked_list.LinkedList">LinkedList</a></b></code>:
 <ul class="hlist">
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.add" href="#cisc0503_dsa.linked_list.LinkedList.add">add</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.add_first" href="#cisc0503_dsa.linked_list.LinkedList.add_first">add_first</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.add_last" href="#cisc0503_dsa.linked_list.LinkedList.add_last">add_last</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.clear" href="#cisc0503_dsa.linked_list.LinkedList.clear">clear</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.contains" href="#cisc0503_dsa.linked_list.LinkedList.contains">contains</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.filter" href="#cisc0503_dsa.linked_list.LinkedList.filter">filter</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get" href="#cisc0503_dsa.linked_list.LinkedList.get">get</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_first" href="#cisc0503_dsa.linked_list.LinkedList.get_first">get_first</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_last" href="#cisc0503_dsa.linked_list.LinkedList.get_last">get_last</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_node" href="#cisc0503_dsa.linked_list.LinkedList.get_node">get_node</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.index" href="#cisc0503_dsa.linked_list.LinkedList.index">index</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.indexOf" href="#cisc0503_dsa.linked_list.LinkedList.indexOf">indexOf</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.insert" href="#cisc0503_dsa.linked_list.LinkedList.insert">insert</a></code></li>
-<li><code><a title="cisc0503_dsa.linked_list.LinkedList.insert_first" href="#cisc0503_dsa.linked_list.LinkedList.insert_first">insert_first</a></code></li>
-<li><code><a title="cisc0503_dsa.linked_list.LinkedList.insert_last" href="#cisc0503_dsa.linked_list.LinkedList.insert_last">insert_last</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.is_empty" href="#cisc0503_dsa.linked_list.LinkedList.is_empty">is_empty</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.lastIndexOf" href="#cisc0503_dsa.linked_list.LinkedList.lastIndexOf">lastIndexOf</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.remove" href="#cisc0503_dsa.linked_list.LinkedList.remove">remove</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.remove_first" href="#cisc0503_dsa.linked_list.LinkedList.remove_first">remove_first</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.remove_last" href="#cisc0503_dsa.linked_list.LinkedList.remove_last">remove_last</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.set" href="#cisc0503_dsa.linked_list.LinkedList.set">set</a></code></li>
@@ -680,24 +764,46 @@ class DoubleLinkedList(LinkedList):
         return self.get_size()
 
     def __copy__(self):
-        new_list = LinkedList()
+        new_list = self.__class__()
         for element in self:
-            new_list.insert_last(element)
+            new_list.add_last(element)
         return new_list
 
     def copy(self):
         return self.__copy__()
 
     def __eq__(self, other):
-        if len(self) != len(other):
+        if self._size != other._size:
             return False
-        for element1, element2 in zip(self, other):
-            if element1 != element2:
-                return False
-        return True
-    
-    def get_size(self):
-        return self._size
+        # for element1, element2 in zip(self, other):
+        #     if element1 != element2:
+        #         return False
+        head1 = self._head
+        head2 = other._head
+
+        # if self._head == self._tail and other._head == other._tail:
+        #     return True
+        
+        if hasattr(other._head, &#34;__prev__&#34;):
+            while head1 and head2:
+                if head1.element != head2.element or \
+                    head1.next and not head2.next or \
+                    not head1.next and head2.next or \
+                    head1.prev and not head2.prev or \
+                    not head1.prev and head2.prev:
+                    return False
+                head1 = head1.next
+                head2 = head2.next
+            return True
+        else:
+            while head1 and head2:
+                if head1.element != head2.element or \
+                    head1.next and not head2.next or \
+                    not head1.next and head2.next:
+                    return False
+                head1 = head1.next
+                head2 = head2.next
+            return True
     
     def is_empty(self) -&gt; bool:
         &#34;&#34;&#34;Returns True if the list is empty, False otherwise.
@@ -705,8 +811,24 @@ class DoubleLinkedList(LinkedList):
         &#34;&#34;&#34;
         return len(self) == 0
 
-    def insert_first(self, element):
-        &#34;&#34;&#34;Insert an element at the beginning of the list.
+    def insert(self, index, element):
+        &#34;&#34;&#34;Insert an element at the specified index in the list.
+
+        &#34;&#34;&#34;
+        if index == 0:
+            self.add_first(element)
+        elif index &gt;= len(self):
+            self.add_last(element)
+        else:
+            one_before = self.get_node(index - 1)
+            node = self.make_node(element)
+            self._size += 1
+            node.next = one_before.next
+            one_before.next = node
+
+
+    def add_first(self, element):
+        &#34;&#34;&#34;Add an element at the beginning of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(element)
@@ -716,8 +838,8 @@ class DoubleLinkedList(LinkedList):
         if self._tail is None:
             self._tail = self._head
 
-    def insert_last(self, element):
-        &#34;&#34;&#34;Insert an element at the end of the list.
+    def add_last(self, element):
+        &#34;&#34;&#34;Add an element at the end of the list.
 
         &#34;&#34;&#34;
         node = self.make_node(element)
@@ -728,23 +850,6 @@ class DoubleLinkedList(LinkedList):
             self._tail = self._tail.next
         self._size += 1 
 
-    def insert(self, index, element):
-        &#34;&#34;&#34;Insert an element at the specified index in the list.
-
-        &#34;&#34;&#34;
-        if index == 0:
-            self.insert_first(element)
-        elif index &gt;= len(self):
-            self.insert_last(element)
-        else:
-            current = self._head
-            for i in range(1, index):
-                current = current.next
-            temp = current.next
-            current.next = self.make_node(element)
-            current.next.next = temp
-            self._size += 1
-
     def remove_first(self):
         &#34;&#34;&#34;Remove the first element in the list.
 
@@ -752,12 +857,12 @@ class DoubleLinkedList(LinkedList):
         if self._size == 0:
             return False
         else:
-            temp = self._head
+            node = self._head
             self._head = self._head.next
             self._size -= 1
             if self._head is None:
                 self._tail = None
-            return True
+            return node.element
 
     def remove_last(self):
         &#34;&#34;&#34;Remove the last element in the list.
@@ -768,16 +873,14 @@ class DoubleLinkedList(LinkedList):
         elif self._size == 1:
             return self.remove_first()
         else:
-            current = self._head
-            for i in range(self._size - 2):
-                current = current.next
-            temp = self._tail
-            self._tail = current
-            self._tail.next = None
+            old_tail = self._tail
+            new_tail = self.get_node(self._size - 2)
+            new_tail.next = None
+            self._tail = new_tail
             self._size -= 1
-            return True
+            return old_tail.element
 
-    def remove(self, index):
+    def removeAt(self, index):
         &#34;&#34;&#34;Remove the element at the specified index in the list.
 
         &#34;&#34;&#34;
@@ -788,13 +891,25 @@ class DoubleLinkedList(LinkedList):
         elif index == self._size - 1:
             return self.remove_last()
         else:
-            previous = self._head
-            for i in range(1, index):
-                previous = previous.next
-            current = previous.next
-            previous.next = current.next
+            previous_node = self.get_node(index - 1)
+            node = previous_node.next
+            previous_node.next = node.next
             self._size -= 1
-            return True
+            return node.element
+
+    def remove(self, element):
+        &#34;&#34;&#34;Remove the specified element if it is in the list.
+
+        args:
+            element - the element to remove.
+        return:
+            bool - True if the element was removed, False otherwise.
+        &#34;&#34;&#34;
+        index = self.indexOf(element)
+        if index == -1:
+            return False
+        else:
+            return self.removeAt(index)
 
     def set(self, index, element):
         &#34;&#34;&#34;Set the element at the specified index in the list.
@@ -803,11 +918,9 @@ class DoubleLinkedList(LinkedList):
         if index &lt; 0 or index &gt;= self._size:
             return None
         else:
-            current = self._head
-            for i in range(index):
-                current = current.next
-            current.element = element
-            return current.element
+            node = self.get_node(index)
+            node.element = element
+            return node.element
 
     def get_first(self):
         &#34;&#34;&#34;Return the first element in the list.
@@ -834,10 +947,8 @@ class DoubleLinkedList(LinkedList):
         if index &lt; 0 or index &gt;= self._size:
             return None
         else:
-            current = self._head
-            for i in range(index):
-                current = current.next
-            return current.element
+            node = self.get_node(index)
+            return node.element
 
     def __getitem__(self, index):
         &#34;&#34;&#34;Return the element at the specified index in the list.
@@ -881,7 +992,7 @@ class DoubleLinkedList(LinkedList):
 
         args:
             element - the element to search for.
-            direction - the direction to traverse the list. 1 for forward, -1 for backward.
+            reverse - the direction to traverse the list. True for backward, False for forward.
         &#34;&#34;&#34;
         index = -1
         for i, current in enumerate(self.traverse()):
@@ -890,14 +1001,184 @@ class DoubleLinkedList(LinkedList):
                 break
             elif current == element and reverse:
                 index = i
-        return index</code></pre>
+        return index
+
+    def clear(self):
+        &#34;&#34;&#34;Clear the entire list
+        &#34;&#34;&#34;
+        self._head = None
+        self._tail = None
+        self._size = 0
+
+    # from Midterm question
+    def countList(self):
+        current = self._head
+        count = 0
+        while current != None:
+            count += 1
+            current = current.next
+        return count
+
+    def filter(self, element):
+        &#34;&#34;&#34;Return a list of indices of all matching elements in the list.
+
+        &#34;&#34;&#34;
+        for i, current in enumerate(self.traverse()):
+            if current == element:
+                yield i
+
+    def get_node(self, index):
+        &#34;&#34;&#34;Return the node at the specified index in the list.
+
+        &#34;&#34;&#34;
+        if index &lt; 0 or index &gt;= self._size:
+            return None
+        else:
+            current = self._head
+            for _ in range(index):
+                current = current.next
+            return current
+
+    # Aliases
+    def add(self, element): # pragma: no cover
+        &#34;&#34;&#34;Same as add_last() per requirements.
+        &#34;&#34;&#34;
+        self.add_last(element)
+
+    def addLast(self, element): # pragma: no cover
+        self.add_last(element)
+
+    def addFirst(self, element): # pragma: no cover
+        self.add_first(element)
+
+    def removeLast(self): # pragma: no cover
+        return self.remove_last()
+
+    def removeFirst(self): # pragma: no cover
+        return self.remove_first()
+
+    def getFirst(self): # pragma: no cover
+        return self.get_first()
+    
+    def getLast(self): # pragma: no cover
+        return self.get_last()
+
+    def getSize(self): # pragma: no cover
+        return self.get_size()
+
+    def get_size(self): # pragma: no cover
+        return self._size
+
+    def isEmpty(self) -&gt; bool: # pragma: no cover
+        return self.is_empty()</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
-<li><a title="cisc0503_dsa.linked_list.DoubleLinkedList" href="#cisc0503_dsa.linked_list.DoubleLinkedList">DoubleLinkedList</a></li>
+<li><a title="cisc0503_dsa.linked_list.DoublyLinkedList" href="#cisc0503_dsa.linked_list.DoublyLinkedList">DoublyLinkedList</a></li>
 </ul>
 <h3>Methods</h3>
 <dl>
+<dt id="cisc0503_dsa.linked_list.LinkedList.add"><code class="name flex">
+<span>def <span class="ident">add</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Same as add_last() per requirements.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add(self, element): # pragma: no cover
+    &#34;&#34;&#34;Same as add_last() per requirements.
+    &#34;&#34;&#34;
+    self.add_last(element)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.addFirst"><code class="name flex">
+<span>def <span class="ident">addFirst</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addFirst(self, element): # pragma: no cover
+    self.add_first(element)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.addLast"><code class="name flex">
+<span>def <span class="ident">addLast</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def addLast(self, element): # pragma: no cover
+    self.add_last(element)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.add_first"><code class="name flex">
+<span>def <span class="ident">add_first</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add an element at the beginning of the list.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_first(self, element):
+    &#34;&#34;&#34;Add an element at the beginning of the list.
+
+    &#34;&#34;&#34;
+    node = self.make_node(element)
+    node.next = self._head
+    self._head = node
+    self._size += 1
+    if self._tail is None:
+        self._tail = self._head</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.add_last"><code class="name flex">
+<span>def <span class="ident">add_last</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Add an element at the end of the list.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def add_last(self, element):
+    &#34;&#34;&#34;Add an element at the end of the list.
+
+    &#34;&#34;&#34;
+    node = self.make_node(element)
+    if self._tail is None:
+        self._head = self._tail = node
+    else:
+        self._tail.next = node
+        self._tail = self._tail.next
+    self._size += 1 </code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.clear"><code class="name flex">
+<span>def <span class="ident">clear</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Clear the entire list</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear(self):
+    &#34;&#34;&#34;Clear the entire list
+    &#34;&#34;&#34;
+    self._head = None
+    self._tail = None
+    self._size = 0</code></pre>
+</details>
+</dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.contains"><code class="name flex">
 <span>def <span class="ident">contains</span></span>(<span>self, element)</span>
 </code></dt>
@@ -930,6 +1211,42 @@ class DoubleLinkedList(LinkedList):
     return self.__copy__()</code></pre>
 </details>
 </dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.countList"><code class="name flex">
+<span>def <span class="ident">countList</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def countList(self):
+    current = self._head
+    count = 0
+    while current != None:
+        count += 1
+        current = current.next
+    return count</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.filter"><code class="name flex">
+<span>def <span class="ident">filter</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return a list of indices of all matching elements in the list.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def filter(self, element):
+    &#34;&#34;&#34;Return a list of indices of all matching elements in the list.
+
+    &#34;&#34;&#34;
+    for i, current in enumerate(self.traverse()):
+        if current == element:
+            yield i</code></pre>
+</details>
+</dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.get"><code class="name flex">
 <span>def <span class="ident">get</span></span>(<span>self, index)</span>
 </code></dt>
@@ -946,10 +1263,47 @@ class DoubleLinkedList(LinkedList):
     if index &lt; 0 or index &gt;= self._size:
         return None
     else:
-        current = self._head
-        for i in range(index):
-            current = current.next
-        return current.element</code></pre>
+        node = self.get_node(index)
+        return node.element</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.getFirst"><code class="name flex">
+<span>def <span class="ident">getFirst</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getFirst(self): # pragma: no cover
+    return self.get_first()</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.getLast"><code class="name flex">
+<span>def <span class="ident">getLast</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getLast(self): # pragma: no cover
+    return self.get_last()</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.getSize"><code class="name flex">
+<span>def <span class="ident">getSize</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getSize(self): # pragma: no cover
+    return self.get_size()</code></pre>
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.get_first"><code class="name flex">
@@ -990,6 +1344,28 @@ class DoubleLinkedList(LinkedList):
         return self._tail.element</code></pre>
 </details>
 </dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.get_node"><code class="name flex">
+<span>def <span class="ident">get_node</span></span>(<span>self, index)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the node at the specified index in the list.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_node(self, index):
+    &#34;&#34;&#34;Return the node at the specified index in the list.
+
+    &#34;&#34;&#34;
+    if index &lt; 0 or index &gt;= self._size:
+        return None
+    else:
+        current = self._head
+        for _ in range(index):
+            current = current.next
+        return current</code></pre>
+</details>
+</dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.get_size"><code class="name flex">
 <span>def <span class="ident">get_size</span></span>(<span>self)</span>
 </code></dt>
@@ -999,7 +1375,7 @@ class DoubleLinkedList(LinkedList):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_size(self):
+<pre><code class="python">def get_size(self): # pragma: no cover
     return self._size</code></pre>
 </details>
 </dd>
@@ -1011,7 +1387,7 @@ class DoubleLinkedList(LinkedList):
 in the specified direction.</p>
 <p>args:
 element - the element to search for.
-direction - the direction to traverse the list. 1 for forward, -1 for backward.</p></div>
+reverse - the direction to traverse the list. True for backward, False for forward.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1022,7 +1398,7 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
 
     args:
         element - the element to search for.
-        direction - the direction to traverse the list. 1 for forward, -1 for backward.
+        reverse - the direction to traverse the list. True for backward, False for forward.
     &#34;&#34;&#34;
     index = -1
     for i, current in enumerate(self.traverse()):
@@ -1064,60 +1440,28 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
 
     &#34;&#34;&#34;
     if index == 0:
-        self.insert_first(element)
+        self.add_first(element)
     elif index &gt;= len(self):
-        self.insert_last(element)
+        self.add_last(element)
     else:
-        current = self._head
-        for i in range(1, index):
-            current = current.next
-        temp = current.next
-        current.next = self.make_node(element)
-        current.next.next = temp
-        self._size += 1</code></pre>
+        one_before = self.get_node(index - 1)
+        node = self.make_node(element)
+        self._size += 1
+        node.next = one_before.next
+        one_before.next = node</code></pre>
 </details>
 </dd>
-<dt id="cisc0503_dsa.linked_list.LinkedList.insert_first"><code class="name flex">
-<span>def <span class="ident">insert_first</span></span>(<span>self, element)</span>
+<dt id="cisc0503_dsa.linked_list.LinkedList.isEmpty"><code class="name flex">
+<span>def <span class="ident">isEmpty</span></span>(<span>self) ‑> bool</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Insert an element at the beginning of the list.</p></div>
+<div class="desc"></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def insert_first(self, element):
-    &#34;&#34;&#34;Insert an element at the beginning of the list.
-
-    &#34;&#34;&#34;
-    node = self.make_node(element)
-    node.next = self._head
-    self._head = node
-    self._size += 1
-    if self._tail is None:
-        self._tail = self._head</code></pre>
-</details>
-</dd>
-<dt id="cisc0503_dsa.linked_list.LinkedList.insert_last"><code class="name flex">
-<span>def <span class="ident">insert_last</span></span>(<span>self, element)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>Insert an element at the end of the list.</p></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def insert_last(self, element):
-    &#34;&#34;&#34;Insert an element at the end of the list.
-
-    &#34;&#34;&#34;
-    node = self.make_node(element)
-    if self._tail is None:
-        self._head = self._tail = node
-    else:
-        self._tail.next = node
-        self._tail = self._tail.next
-    self._size += 1 </code></pre>
+<pre><code class="python">def isEmpty(self) -&gt; bool: # pragma: no cover
+    return self.is_empty()</code></pre>
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.is_empty"><code class="name flex">
@@ -1166,7 +1510,35 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.remove"><code class="name flex">
-<span>def <span class="ident">remove</span></span>(<span>self, index)</span>
+<span>def <span class="ident">remove</span></span>(<span>self, element)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Remove the specified element if it is in the list.</p>
+<p>args:
+element - the element to remove.
+return:
+bool - True if the element was removed, False otherwise.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def remove(self, element):
+    &#34;&#34;&#34;Remove the specified element if it is in the list.
+
+    args:
+        element - the element to remove.
+    return:
+        bool - True if the element was removed, False otherwise.
+    &#34;&#34;&#34;
+    index = self.indexOf(element)
+    if index == -1:
+        return False
+    else:
+        return self.removeAt(index)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.removeAt"><code class="name flex">
+<span>def <span class="ident">removeAt</span></span>(<span>self, index)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Remove the element at the specified index in the list.</p></div>
@@ -1174,7 +1546,7 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def remove(self, index):
+<pre><code class="python">def removeAt(self, index):
     &#34;&#34;&#34;Remove the element at the specified index in the list.
 
     &#34;&#34;&#34;
@@ -1185,13 +1557,37 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
     elif index == self._size - 1:
         return self.remove_last()
     else:
-        previous = self._head
-        for i in range(1, index):
-            previous = previous.next
-        current = previous.next
-        previous.next = current.next
+        previous_node = self.get_node(index - 1)
+        node = previous_node.next
+        previous_node.next = node.next
         self._size -= 1
-        return True</code></pre>
+        return node.element</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.removeFirst"><code class="name flex">
+<span>def <span class="ident">removeFirst</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def removeFirst(self): # pragma: no cover
+    return self.remove_first()</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.linked_list.LinkedList.removeLast"><code class="name flex">
+<span>def <span class="ident">removeLast</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def removeLast(self): # pragma: no cover
+    return self.remove_last()</code></pre>
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.remove_first"><code class="name flex">
@@ -1210,12 +1606,12 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
     if self._size == 0:
         return False
     else:
-        temp = self._head
+        node = self._head
         self._head = self._head.next
         self._size -= 1
         if self._head is None:
             self._tail = None
-        return True</code></pre>
+        return node.element</code></pre>
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.remove_last"><code class="name flex">
@@ -1236,14 +1632,12 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
     elif self._size == 1:
         return self.remove_first()
     else:
-        current = self._head
-        for i in range(self._size - 2):
-            current = current.next
-        temp = self._tail
-        self._tail = current
-        self._tail.next = None
+        old_tail = self._tail
+        new_tail = self.get_node(self._size - 2)
+        new_tail.next = None
+        self._tail = new_tail
         self._size -= 1
-        return True</code></pre>
+        return old_tail.element</code></pre>
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.set"><code class="name flex">
@@ -1262,11 +1656,9 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
     if index &lt; 0 or index &gt;= self._size:
         return None
     else:
-        current = self._head
-        for i in range(index):
-            current = current.next
-        current.element = element
-        return current.element</code></pre>
+        node = self.get_node(index)
+        node.element = element
+        return node.element</code></pre>
 </details>
 </dd>
 <dt id="cisc0503_dsa.linked_list.LinkedList.traverse"><code class="name flex">
@@ -1343,29 +1735,43 @@ direction - the direction to traverse the list. 1 for forward, -1 for backward.<
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="cisc0503_dsa.linked_list.DoubleLinkedList" href="#cisc0503_dsa.linked_list.DoubleLinkedList">DoubleLinkedList</a></code></h4>
+<h4><code><a title="cisc0503_dsa.linked_list.DoublyLinkedList" href="#cisc0503_dsa.linked_list.DoublyLinkedList">DoublyLinkedList</a></code></h4>
 <ul class="">
-<li><code><a title="cisc0503_dsa.linked_list.DoubleLinkedList.remove" href="#cisc0503_dsa.linked_list.DoubleLinkedList.remove">remove</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.DoublyLinkedList.removeAt" href="#cisc0503_dsa.linked_list.DoublyLinkedList.removeAt">removeAt</a></code></li>
 </ul>
 </li>
 <li>
 <h4><code><a title="cisc0503_dsa.linked_list.LinkedList" href="#cisc0503_dsa.linked_list.LinkedList">LinkedList</a></code></h4>
 <ul class="two-column">
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.add" href="#cisc0503_dsa.linked_list.LinkedList.add">add</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.addFirst" href="#cisc0503_dsa.linked_list.LinkedList.addFirst">addFirst</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.addLast" href="#cisc0503_dsa.linked_list.LinkedList.addLast">addLast</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.add_first" href="#cisc0503_dsa.linked_list.LinkedList.add_first">add_first</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.add_last" href="#cisc0503_dsa.linked_list.LinkedList.add_last">add_last</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.clear" href="#cisc0503_dsa.linked_list.LinkedList.clear">clear</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.contains" href="#cisc0503_dsa.linked_list.LinkedList.contains">contains</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.copy" href="#cisc0503_dsa.linked_list.LinkedList.copy">copy</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.countList" href="#cisc0503_dsa.linked_list.LinkedList.countList">countList</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.filter" href="#cisc0503_dsa.linked_list.LinkedList.filter">filter</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get" href="#cisc0503_dsa.linked_list.LinkedList.get">get</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.getFirst" href="#cisc0503_dsa.linked_list.LinkedList.getFirst">getFirst</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.getLast" href="#cisc0503_dsa.linked_list.LinkedList.getLast">getLast</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.getSize" href="#cisc0503_dsa.linked_list.LinkedList.getSize">getSize</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_first" href="#cisc0503_dsa.linked_list.LinkedList.get_first">get_first</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_last" href="#cisc0503_dsa.linked_list.LinkedList.get_last">get_last</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_node" href="#cisc0503_dsa.linked_list.LinkedList.get_node">get_node</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.get_size" href="#cisc0503_dsa.linked_list.LinkedList.get_size">get_size</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.index" href="#cisc0503_dsa.linked_list.LinkedList.index">index</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.indexOf" href="#cisc0503_dsa.linked_list.LinkedList.indexOf">indexOf</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.insert" href="#cisc0503_dsa.linked_list.LinkedList.insert">insert</a></code></li>
-<li><code><a title="cisc0503_dsa.linked_list.LinkedList.insert_first" href="#cisc0503_dsa.linked_list.LinkedList.insert_first">insert_first</a></code></li>
-<li><code><a title="cisc0503_dsa.linked_list.LinkedList.insert_last" href="#cisc0503_dsa.linked_list.LinkedList.insert_last">insert_last</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.isEmpty" href="#cisc0503_dsa.linked_list.LinkedList.isEmpty">isEmpty</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.is_empty" href="#cisc0503_dsa.linked_list.LinkedList.is_empty">is_empty</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.lastIndexOf" href="#cisc0503_dsa.linked_list.LinkedList.lastIndexOf">lastIndexOf</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.make_node" href="#cisc0503_dsa.linked_list.LinkedList.make_node">make_node</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.remove" href="#cisc0503_dsa.linked_list.LinkedList.remove">remove</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.removeAt" href="#cisc0503_dsa.linked_list.LinkedList.removeAt">removeAt</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.removeFirst" href="#cisc0503_dsa.linked_list.LinkedList.removeFirst">removeFirst</a></code></li>
+<li><code><a title="cisc0503_dsa.linked_list.LinkedList.removeLast" href="#cisc0503_dsa.linked_list.LinkedList.removeLast">removeLast</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.remove_first" href="#cisc0503_dsa.linked_list.LinkedList.remove_first">remove_first</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.remove_last" href="#cisc0503_dsa.linked_list.LinkedList.remove_last">remove_last</a></code></li>
 <li><code><a title="cisc0503_dsa.linked_list.LinkedList.set" href="#cisc0503_dsa.linked_list.LinkedList.set">set</a></code></li>
