@@ -1,0 +1,1214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>cisc0503_dsa.BST API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>cisc0503_dsa.BST</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">#Binary Search Tree
+class TreeNode:
+    def __init__(self, e):
+        self.element = e
+        self.left = None  # Point to the left node, default None
+        self.right = None # Point to the right node, default None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+        self.size = 0
+
+    # Return True if the element is in the tree 
+    def search(self, e):
+        current = self.root # Start from the root
+
+        while current != None:
+            if e &lt; current.element:
+                current = current.left
+            elif e &gt; current.element:
+                current = current.right
+            else: # element matches current.element
+                return True # Element is found
+
+        return False
+
+    def __repr__(self): # pragma: no cover
+        return self._display(compact=True)
+
+    def __str__(self): # pragma: no cover
+        return self._display(compact=False)
+
+    def display(self, compact=False): # pragma: no cover
+        print(self._display(compact=compact))
+
+    def _display(self, compact=False): # pragma: no cover
+        if self.root is None:
+            return &#34;&lt;empty tree&gt;&#34;
+
+        h = self._height(self.root)
+        matrix = [[&#39; &#39;] * (2 ** h) * 2 for _ in range(h * 2)]
+        col_idx = 2 ** h
+        levels = [[(self.root, col_idx)]]
+
+        for l in range(h):
+            curr_lvl = levels[l]
+            next_lvl = []
+            for node, col_idx in curr_lvl:
+                matrix[l * 2][col_idx] = str(node.element)
+                conn_row = matrix[l * 2 + 1]
+                if node.left:
+                    lft_idx = col_idx - 2 ** (h - l - 1)
+                    next_lvl.append((node.left, lft_idx))
+                    conn_row[col_idx] = &#34;┘&#34;
+                    conn_row[lft_idx] = &#34;┌&#34;
+                    for j in range(lft_idx + 1, col_idx):
+                        conn_row[j] = &#34;─&#34;
+                if node.right:
+                    rt_idx = col_idx + 2 ** (h - l - 1)
+                    next_lvl.append((node.right, rt_idx))
+                    conn_row[col_idx] = &#34;└&#34;
+                    conn_row[rt_idx] = &#34;┐&#34;
+                    for j in range(col_idx + 1, rt_idx):
+                        conn_row[j] = &#34;─&#34;
+                if node.left and node.right:
+                    conn_row[col_idx] = &#34;┴&#34;
+            levels.append(next_lvl)
+
+        self._left_align(matrix, compact)
+        return &#34;\n&#34;.join([&#39;&#39;.join(row) for row in matrix])
+
+    def _height(self, node):
+        if node is None:
+            return 0
+        return max(self._height(node.left), self._height(node.right)) + 1
+
+    @staticmethod
+    def _left_align(matrix, compact=True):
+        empty_columns = []
+        for col_idx in range(len(matrix[0])):
+            for row_idx in range(len(matrix)):
+                symbol = matrix[row_idx][col_idx]
+                if symbol == &#39; &#39; or (symbol == &#39;─&#39; if compact else False):
+                    continue
+                else:
+                    break
+            else:
+                empty_columns.append(col_idx)
+
+        for row_idx in range(len(matrix)):
+            for col_idx in empty_columns:
+                matrix[row_idx][col_idx] = &#39;&#39;
+
+        return matrix
+
+    # Insert element e into the binary search tree
+    # Return True if the element is inserted successfully 
+    def insert(self, e):
+        if self.root == None:
+            self.root = self.createNewNode(e) # Create a new root
+        else:
+            # Locate the parent node
+            parent = None
+            current = self.root
+            while current != None:
+                if e &lt; current.element:
+                    parent = current
+                    current = current.left
+                elif e &gt; current.element:
+                    parent = current
+                    current = current.right
+                else:
+                    return False # Duplicate node not inserted
+
+            # Create the new node and attach it to the parent node
+            if e &lt; parent.element:
+                parent.left = self.createNewNode(e)
+            else:
+                parent.right = self.createNewNode(e)
+
+        self.size += 1 # Increase tree size
+        return True # Element inserted
+
+    # Create a new TreeNode for element e
+    def createNewNode(self, e):
+        return TreeNode(e)
+
+    # Return the size of the tree
+    def getSize(self):
+        return self.size
+    
+    # Inorder traversal from the root
+    def inorder(self):
+        self.inorderHelper(self.root)
+        print(&#34;&#34;)
+
+    # Inorder traversal from a subtree 
+    def inorderHelper(self, r):
+        if r != None:
+            self.inorderHelper(r.left)
+            print(r.element, end = &#34; &#34;)
+            self.inorderHelper(r.right)
+
+    # Postorder traversal from the root 
+    def postorder(self):
+        self.postorderHelper(self.root)
+        print(&#34;&#34;)
+
+    # Postorder traversal from a subtree 
+    def postorderHelper(self, root):
+        if root != None:
+            self.postorderHelper(root.left)
+            self.postorderHelper(root.right)
+            print(root.element, end = &#34; &#34;)
+
+    # Preorder traversal from the root 
+    def preorder(self):
+        self.preorderHelper(self.root)
+        print(&#34;&#34;)
+
+    # Preorder traversal from a subtree 
+    def preorderHelper(self, root):
+        if root != None:
+            print(root.element, end = &#34; &#34;)
+            self.preorderHelper(root.left)
+            self.preorderHelper(root.right)
+
+    # Delete an element from the binary search tree.
+    # Return True if the element is deleted successfully
+    # Return False if the element is not in the tree 
+    def delete(self, e):
+        # Locate the node to be deleted and its parent node
+        parent = None
+        current = self.root
+        while current != None:
+            if e &lt; current.element:
+                parent = current
+                current = current.left
+            elif e &gt; current.element: 
+                parent = current
+                current = current.right
+            else:
+                break # Element is in the tree pointed by current
+
+        if current == None:
+            return False # Element is not in the tree
+
+        # Case 1: current has no left children
+        if current.left == None:
+            # Connect the parent with the right child of the current node
+            if parent == None:
+                self.root = current.right
+            else:
+                if e &lt; parent.element:
+                    parent.left = current.right
+                else:
+                    parent.right = current.right
+        else:
+            # Case 2: The current node has a left child
+            # Locate the rightmost node in the left subtree of
+            # the current node and also its parent
+            parentOfRightMost = current
+            rightMost = current.left
+
+            while rightMost.right != None:
+                parentOfRightMost = rightMost
+                rightMost = rightMost.right # Keep going to the right
+
+            # Replace the element in current by the element in rightMost
+            current.element = rightMost.element
+
+            # Eliminate rightmost node
+            if parentOfRightMost.right == rightMost:
+                parentOfRightMost.right = rightMost.left
+            else:
+                # Special case: parentOfRightMost == current
+                parentOfRightMost.left = rightMost.left     
+
+        self.size -= 1
+        return True # Element deleted
+
+    # Return true if the tree is empty
+    def isEmpty(self):
+        return self.size == 0
+        
+    # Remove all elements from the tree
+    def clear(self):
+        self.root = None
+        self.size = 0
+
+    def calcMinAndy(self):
+        &#34;&#34;&#34;Return the min value of the tree&#34;&#34;&#34;
+        if self.root == None:
+            return None
+        current = self.root
+        while current.left != None:
+            current = current.left
+        return current.element
+
+    def calcMaxAndy(self):
+        &#34;&#34;&#34;Return the max value of the tree&#34;&#34;&#34;
+        if self.root == None:
+            return None
+        current = self.root
+        while current.right != None:
+            current = current.right
+        return current.element
+   
+    def countNodesAndy(self, node=None):
+        &#34;&#34;&#34;Count the number of nodes in the tree recursively.
+
+        If the node is None (i.e., the tree is empty or it&#39;s a leaf&#39;s child), return 0.
+        Otherwise, return 1 (for the current node) plus the count from the left subtree 
+        and the count from the right subtree.
+        &#34;&#34;&#34;
+        if node is None:
+            node = self.root
+
+        # Base case: if the node is None, return 0
+        if node is None:
+            return 0
+
+        # Initialize count with the current node
+        count = 1
+
+        # Recursively count nodes in the left subtree, if it exists
+        if node.left is not None:
+            count += self.countNodesAndy(node.left)
+
+        # Recursively count nodes in the right subtree, if it exists
+        if node.right is not None:
+            count += self.countNodesAndy(node.right)
+
+        return count
+
+    def deleteAllNodesAndy(self, node=None):
+        &#34;&#34;&#34;Recursively delete all nodes in the tree.&#34;&#34;&#34;
+        if self.root is None:
+            return None
+
+        if node is None:
+            node = self.root
+
+        deleted = self.delete(node.element)
+        if deleted != None:
+            return self.deleteAllNodesAndy(self.root)
+
+    def leafCountAndy(self, node=None, verbose=False):
+        &#34;&#34;&#34;Return the number of leaf nodes in the tree.&#34;&#34;&#34;
+        if self.root is None:
+            return 0
+
+        if node is None:
+            node = self.root
+
+        count = 0
+        if node.left is None and node.right is None:
+            if verbose: print(f&#34;Leaf node: {node.element}&#34;)
+            count += 1
+        else:
+            if node.left is not None:
+                count += self.leafCountAndy(node.left, verbose=verbose)
+            if node.right is not None:
+                count += self.leafCountAndy(node.right, verbose=verbose)
+
+        return count
+
+    def computeOneChildNodesAndy(self, node=None, verbose=False):
+        &#34;&#34;&#34;Return the number of nodes with only one child.&#34;&#34;&#34;
+        if self.root is None:
+            return 0
+
+        if node is None:
+            node = self.root
+
+        count = 0
+        if (node.left is None and node.right is not None) or (node.right is None and node.left is not None):
+            if verbose: print(f&#34;One-child node: {node.element}&#34;)
+            count += 1
+        
+        if node.left is not None:
+            count += self.computeOneChildNodesAndy(node.left, verbose=verbose)
+        if node.right is not None:
+            count += self.computeOneChildNodesAndy(node.right, verbose=verbose)
+
+        return count
+        
+
+
+
+
+        
+
+        </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="cisc0503_dsa.BST.BST"><code class="flex name class">
+<span>class <span class="ident">BST</span></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class BST:
+    def __init__(self):
+        self.root = None
+        self.size = 0
+
+    # Return True if the element is in the tree 
+    def search(self, e):
+        current = self.root # Start from the root
+
+        while current != None:
+            if e &lt; current.element:
+                current = current.left
+            elif e &gt; current.element:
+                current = current.right
+            else: # element matches current.element
+                return True # Element is found
+
+        return False
+
+    def __repr__(self): # pragma: no cover
+        return self._display(compact=True)
+
+    def __str__(self): # pragma: no cover
+        return self._display(compact=False)
+
+    def display(self, compact=False): # pragma: no cover
+        print(self._display(compact=compact))
+
+    def _display(self, compact=False): # pragma: no cover
+        if self.root is None:
+            return &#34;&lt;empty tree&gt;&#34;
+
+        h = self._height(self.root)
+        matrix = [[&#39; &#39;] * (2 ** h) * 2 for _ in range(h * 2)]
+        col_idx = 2 ** h
+        levels = [[(self.root, col_idx)]]
+
+        for l in range(h):
+            curr_lvl = levels[l]
+            next_lvl = []
+            for node, col_idx in curr_lvl:
+                matrix[l * 2][col_idx] = str(node.element)
+                conn_row = matrix[l * 2 + 1]
+                if node.left:
+                    lft_idx = col_idx - 2 ** (h - l - 1)
+                    next_lvl.append((node.left, lft_idx))
+                    conn_row[col_idx] = &#34;┘&#34;
+                    conn_row[lft_idx] = &#34;┌&#34;
+                    for j in range(lft_idx + 1, col_idx):
+                        conn_row[j] = &#34;─&#34;
+                if node.right:
+                    rt_idx = col_idx + 2 ** (h - l - 1)
+                    next_lvl.append((node.right, rt_idx))
+                    conn_row[col_idx] = &#34;└&#34;
+                    conn_row[rt_idx] = &#34;┐&#34;
+                    for j in range(col_idx + 1, rt_idx):
+                        conn_row[j] = &#34;─&#34;
+                if node.left and node.right:
+                    conn_row[col_idx] = &#34;┴&#34;
+            levels.append(next_lvl)
+
+        self._left_align(matrix, compact)
+        return &#34;\n&#34;.join([&#39;&#39;.join(row) for row in matrix])
+
+    def _height(self, node):
+        if node is None:
+            return 0
+        return max(self._height(node.left), self._height(node.right)) + 1
+
+    @staticmethod
+    def _left_align(matrix, compact=True):
+        empty_columns = []
+        for col_idx in range(len(matrix[0])):
+            for row_idx in range(len(matrix)):
+                symbol = matrix[row_idx][col_idx]
+                if symbol == &#39; &#39; or (symbol == &#39;─&#39; if compact else False):
+                    continue
+                else:
+                    break
+            else:
+                empty_columns.append(col_idx)
+
+        for row_idx in range(len(matrix)):
+            for col_idx in empty_columns:
+                matrix[row_idx][col_idx] = &#39;&#39;
+
+        return matrix
+
+    # Insert element e into the binary search tree
+    # Return True if the element is inserted successfully 
+    def insert(self, e):
+        if self.root == None:
+            self.root = self.createNewNode(e) # Create a new root
+        else:
+            # Locate the parent node
+            parent = None
+            current = self.root
+            while current != None:
+                if e &lt; current.element:
+                    parent = current
+                    current = current.left
+                elif e &gt; current.element:
+                    parent = current
+                    current = current.right
+                else:
+                    return False # Duplicate node not inserted
+
+            # Create the new node and attach it to the parent node
+            if e &lt; parent.element:
+                parent.left = self.createNewNode(e)
+            else:
+                parent.right = self.createNewNode(e)
+
+        self.size += 1 # Increase tree size
+        return True # Element inserted
+
+    # Create a new TreeNode for element e
+    def createNewNode(self, e):
+        return TreeNode(e)
+
+    # Return the size of the tree
+    def getSize(self):
+        return self.size
+    
+    # Inorder traversal from the root
+    def inorder(self):
+        self.inorderHelper(self.root)
+        print(&#34;&#34;)
+
+    # Inorder traversal from a subtree 
+    def inorderHelper(self, r):
+        if r != None:
+            self.inorderHelper(r.left)
+            print(r.element, end = &#34; &#34;)
+            self.inorderHelper(r.right)
+
+    # Postorder traversal from the root 
+    def postorder(self):
+        self.postorderHelper(self.root)
+        print(&#34;&#34;)
+
+    # Postorder traversal from a subtree 
+    def postorderHelper(self, root):
+        if root != None:
+            self.postorderHelper(root.left)
+            self.postorderHelper(root.right)
+            print(root.element, end = &#34; &#34;)
+
+    # Preorder traversal from the root 
+    def preorder(self):
+        self.preorderHelper(self.root)
+        print(&#34;&#34;)
+
+    # Preorder traversal from a subtree 
+    def preorderHelper(self, root):
+        if root != None:
+            print(root.element, end = &#34; &#34;)
+            self.preorderHelper(root.left)
+            self.preorderHelper(root.right)
+
+    # Delete an element from the binary search tree.
+    # Return True if the element is deleted successfully
+    # Return False if the element is not in the tree 
+    def delete(self, e):
+        # Locate the node to be deleted and its parent node
+        parent = None
+        current = self.root
+        while current != None:
+            if e &lt; current.element:
+                parent = current
+                current = current.left
+            elif e &gt; current.element: 
+                parent = current
+                current = current.right
+            else:
+                break # Element is in the tree pointed by current
+
+        if current == None:
+            return False # Element is not in the tree
+
+        # Case 1: current has no left children
+        if current.left == None:
+            # Connect the parent with the right child of the current node
+            if parent == None:
+                self.root = current.right
+            else:
+                if e &lt; parent.element:
+                    parent.left = current.right
+                else:
+                    parent.right = current.right
+        else:
+            # Case 2: The current node has a left child
+            # Locate the rightmost node in the left subtree of
+            # the current node and also its parent
+            parentOfRightMost = current
+            rightMost = current.left
+
+            while rightMost.right != None:
+                parentOfRightMost = rightMost
+                rightMost = rightMost.right # Keep going to the right
+
+            # Replace the element in current by the element in rightMost
+            current.element = rightMost.element
+
+            # Eliminate rightmost node
+            if parentOfRightMost.right == rightMost:
+                parentOfRightMost.right = rightMost.left
+            else:
+                # Special case: parentOfRightMost == current
+                parentOfRightMost.left = rightMost.left     
+
+        self.size -= 1
+        return True # Element deleted
+
+    # Return true if the tree is empty
+    def isEmpty(self):
+        return self.size == 0
+        
+    # Remove all elements from the tree
+    def clear(self):
+        self.root = None
+        self.size = 0
+
+    def calcMinAndy(self):
+        &#34;&#34;&#34;Return the min value of the tree&#34;&#34;&#34;
+        if self.root == None:
+            return None
+        current = self.root
+        while current.left != None:
+            current = current.left
+        return current.element
+
+    def calcMaxAndy(self):
+        &#34;&#34;&#34;Return the max value of the tree&#34;&#34;&#34;
+        if self.root == None:
+            return None
+        current = self.root
+        while current.right != None:
+            current = current.right
+        return current.element
+   
+    def countNodesAndy(self, node=None):
+        &#34;&#34;&#34;Count the number of nodes in the tree recursively.
+
+        If the node is None (i.e., the tree is empty or it&#39;s a leaf&#39;s child), return 0.
+        Otherwise, return 1 (for the current node) plus the count from the left subtree 
+        and the count from the right subtree.
+        &#34;&#34;&#34;
+        if node is None:
+            node = self.root
+
+        # Base case: if the node is None, return 0
+        if node is None:
+            return 0
+
+        # Initialize count with the current node
+        count = 1
+
+        # Recursively count nodes in the left subtree, if it exists
+        if node.left is not None:
+            count += self.countNodesAndy(node.left)
+
+        # Recursively count nodes in the right subtree, if it exists
+        if node.right is not None:
+            count += self.countNodesAndy(node.right)
+
+        return count
+
+    def deleteAllNodesAndy(self, node=None):
+        &#34;&#34;&#34;Recursively delete all nodes in the tree.&#34;&#34;&#34;
+        if self.root is None:
+            return None
+
+        if node is None:
+            node = self.root
+
+        deleted = self.delete(node.element)
+        if deleted != None:
+            return self.deleteAllNodesAndy(self.root)
+
+    def leafCountAndy(self, node=None, verbose=False):
+        &#34;&#34;&#34;Return the number of leaf nodes in the tree.&#34;&#34;&#34;
+        if self.root is None:
+            return 0
+
+        if node is None:
+            node = self.root
+
+        count = 0
+        if node.left is None and node.right is None:
+            if verbose: print(f&#34;Leaf node: {node.element}&#34;)
+            count += 1
+        else:
+            if node.left is not None:
+                count += self.leafCountAndy(node.left, verbose=verbose)
+            if node.right is not None:
+                count += self.leafCountAndy(node.right, verbose=verbose)
+
+        return count
+
+    def computeOneChildNodesAndy(self, node=None, verbose=False):
+        &#34;&#34;&#34;Return the number of nodes with only one child.&#34;&#34;&#34;
+        if self.root is None:
+            return 0
+
+        if node is None:
+            node = self.root
+
+        count = 0
+        if (node.left is None and node.right is not None) or (node.right is None and node.left is not None):
+            if verbose: print(f&#34;One-child node: {node.element}&#34;)
+            count += 1
+        
+        if node.left is not None:
+            count += self.computeOneChildNodesAndy(node.left, verbose=verbose)
+        if node.right is not None:
+            count += self.computeOneChildNodesAndy(node.right, verbose=verbose)
+
+        return count</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="cisc0503_dsa.BST.BST.calcMaxAndy"><code class="name flex">
+<span>def <span class="ident">calcMaxAndy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the max value of the tree</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calcMaxAndy(self):
+    &#34;&#34;&#34;Return the max value of the tree&#34;&#34;&#34;
+    if self.root == None:
+        return None
+    current = self.root
+    while current.right != None:
+        current = current.right
+    return current.element</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.calcMinAndy"><code class="name flex">
+<span>def <span class="ident">calcMinAndy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the min value of the tree</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calcMinAndy(self):
+    &#34;&#34;&#34;Return the min value of the tree&#34;&#34;&#34;
+    if self.root == None:
+        return None
+    current = self.root
+    while current.left != None:
+        current = current.left
+    return current.element</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.clear"><code class="name flex">
+<span>def <span class="ident">clear</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear(self):
+    self.root = None
+    self.size = 0</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.computeOneChildNodesAndy"><code class="name flex">
+<span>def <span class="ident">computeOneChildNodesAndy</span></span>(<span>self, node=None, verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the number of nodes with only one child.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def computeOneChildNodesAndy(self, node=None, verbose=False):
+    &#34;&#34;&#34;Return the number of nodes with only one child.&#34;&#34;&#34;
+    if self.root is None:
+        return 0
+
+    if node is None:
+        node = self.root
+
+    count = 0
+    if (node.left is None and node.right is not None) or (node.right is None and node.left is not None):
+        if verbose: print(f&#34;One-child node: {node.element}&#34;)
+        count += 1
+    
+    if node.left is not None:
+        count += self.computeOneChildNodesAndy(node.left, verbose=verbose)
+    if node.right is not None:
+        count += self.computeOneChildNodesAndy(node.right, verbose=verbose)
+
+    return count</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.countNodesAndy"><code class="name flex">
+<span>def <span class="ident">countNodesAndy</span></span>(<span>self, node=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Count the number of nodes in the tree recursively.</p>
+<p>If the node is None (i.e., the tree is empty or it's a leaf's child), return 0.
+Otherwise, return 1 (for the current node) plus the count from the left subtree
+and the count from the right subtree.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def countNodesAndy(self, node=None):
+    &#34;&#34;&#34;Count the number of nodes in the tree recursively.
+
+    If the node is None (i.e., the tree is empty or it&#39;s a leaf&#39;s child), return 0.
+    Otherwise, return 1 (for the current node) plus the count from the left subtree 
+    and the count from the right subtree.
+    &#34;&#34;&#34;
+    if node is None:
+        node = self.root
+
+    # Base case: if the node is None, return 0
+    if node is None:
+        return 0
+
+    # Initialize count with the current node
+    count = 1
+
+    # Recursively count nodes in the left subtree, if it exists
+    if node.left is not None:
+        count += self.countNodesAndy(node.left)
+
+    # Recursively count nodes in the right subtree, if it exists
+    if node.right is not None:
+        count += self.countNodesAndy(node.right)
+
+    return count</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.createNewNode"><code class="name flex">
+<span>def <span class="ident">createNewNode</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def createNewNode(self, e):
+    return TreeNode(e)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def delete(self, e):
+    # Locate the node to be deleted and its parent node
+    parent = None
+    current = self.root
+    while current != None:
+        if e &lt; current.element:
+            parent = current
+            current = current.left
+        elif e &gt; current.element: 
+            parent = current
+            current = current.right
+        else:
+            break # Element is in the tree pointed by current
+
+    if current == None:
+        return False # Element is not in the tree
+
+    # Case 1: current has no left children
+    if current.left == None:
+        # Connect the parent with the right child of the current node
+        if parent == None:
+            self.root = current.right
+        else:
+            if e &lt; parent.element:
+                parent.left = current.right
+            else:
+                parent.right = current.right
+    else:
+        # Case 2: The current node has a left child
+        # Locate the rightmost node in the left subtree of
+        # the current node and also its parent
+        parentOfRightMost = current
+        rightMost = current.left
+
+        while rightMost.right != None:
+            parentOfRightMost = rightMost
+            rightMost = rightMost.right # Keep going to the right
+
+        # Replace the element in current by the element in rightMost
+        current.element = rightMost.element
+
+        # Eliminate rightmost node
+        if parentOfRightMost.right == rightMost:
+            parentOfRightMost.right = rightMost.left
+        else:
+            # Special case: parentOfRightMost == current
+            parentOfRightMost.left = rightMost.left     
+
+    self.size -= 1
+    return True # Element deleted</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.deleteAllNodesAndy"><code class="name flex">
+<span>def <span class="ident">deleteAllNodesAndy</span></span>(<span>self, node=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Recursively delete all nodes in the tree.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def deleteAllNodesAndy(self, node=None):
+    &#34;&#34;&#34;Recursively delete all nodes in the tree.&#34;&#34;&#34;
+    if self.root is None:
+        return None
+
+    if node is None:
+        node = self.root
+
+    deleted = self.delete(node.element)
+    if deleted != None:
+        return self.deleteAllNodesAndy(self.root)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.display"><code class="name flex">
+<span>def <span class="ident">display</span></span>(<span>self, compact=False)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def display(self, compact=False): # pragma: no cover
+    print(self._display(compact=compact))</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.getSize"><code class="name flex">
+<span>def <span class="ident">getSize</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getSize(self):
+    return self.size</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.inorder"><code class="name flex">
+<span>def <span class="ident">inorder</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inorder(self):
+    self.inorderHelper(self.root)
+    print(&#34;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.inorderHelper"><code class="name flex">
+<span>def <span class="ident">inorderHelper</span></span>(<span>self, r)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def inorderHelper(self, r):
+    if r != None:
+        self.inorderHelper(r.left)
+        print(r.element, end = &#34; &#34;)
+        self.inorderHelper(r.right)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.insert"><code class="name flex">
+<span>def <span class="ident">insert</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def insert(self, e):
+    if self.root == None:
+        self.root = self.createNewNode(e) # Create a new root
+    else:
+        # Locate the parent node
+        parent = None
+        current = self.root
+        while current != None:
+            if e &lt; current.element:
+                parent = current
+                current = current.left
+            elif e &gt; current.element:
+                parent = current
+                current = current.right
+            else:
+                return False # Duplicate node not inserted
+
+        # Create the new node and attach it to the parent node
+        if e &lt; parent.element:
+            parent.left = self.createNewNode(e)
+        else:
+            parent.right = self.createNewNode(e)
+
+    self.size += 1 # Increase tree size
+    return True # Element inserted</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.isEmpty"><code class="name flex">
+<span>def <span class="ident">isEmpty</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def isEmpty(self):
+    return self.size == 0</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.leafCountAndy"><code class="name flex">
+<span>def <span class="ident">leafCountAndy</span></span>(<span>self, node=None, verbose=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Return the number of leaf nodes in the tree.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def leafCountAndy(self, node=None, verbose=False):
+    &#34;&#34;&#34;Return the number of leaf nodes in the tree.&#34;&#34;&#34;
+    if self.root is None:
+        return 0
+
+    if node is None:
+        node = self.root
+
+    count = 0
+    if node.left is None and node.right is None:
+        if verbose: print(f&#34;Leaf node: {node.element}&#34;)
+        count += 1
+    else:
+        if node.left is not None:
+            count += self.leafCountAndy(node.left, verbose=verbose)
+        if node.right is not None:
+            count += self.leafCountAndy(node.right, verbose=verbose)
+
+    return count</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.postorder"><code class="name flex">
+<span>def <span class="ident">postorder</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def postorder(self):
+    self.postorderHelper(self.root)
+    print(&#34;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.postorderHelper"><code class="name flex">
+<span>def <span class="ident">postorderHelper</span></span>(<span>self, root)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def postorderHelper(self, root):
+    if root != None:
+        self.postorderHelper(root.left)
+        self.postorderHelper(root.right)
+        print(root.element, end = &#34; &#34;)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.preorder"><code class="name flex">
+<span>def <span class="ident">preorder</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preorder(self):
+    self.preorderHelper(self.root)
+    print(&#34;&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.preorderHelper"><code class="name flex">
+<span>def <span class="ident">preorderHelper</span></span>(<span>self, root)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preorderHelper(self, root):
+    if root != None:
+        print(root.element, end = &#34; &#34;)
+        self.preorderHelper(root.left)
+        self.preorderHelper(root.right)</code></pre>
+</details>
+</dd>
+<dt id="cisc0503_dsa.BST.BST.search"><code class="name flex">
+<span>def <span class="ident">search</span></span>(<span>self, e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def search(self, e):
+    current = self.root # Start from the root
+
+    while current != None:
+        if e &lt; current.element:
+            current = current.left
+        elif e &gt; current.element:
+            current = current.right
+        else: # element matches current.element
+            return True # Element is found
+
+    return False</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="cisc0503_dsa.BST.TreeNode"><code class="flex name class">
+<span>class <span class="ident">TreeNode</span></span>
+<span>(</span><span>e)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class TreeNode:
+    def __init__(self, e):
+        self.element = e
+        self.left = None  # Point to the left node, default None
+        self.right = None # Point to the right node, default None</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="cisc0503_dsa" href="index.html">cisc0503_dsa</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="cisc0503_dsa.BST.BST" href="#cisc0503_dsa.BST.BST">BST</a></code></h4>
+<ul class="">
+<li><code><a title="cisc0503_dsa.BST.BST.calcMaxAndy" href="#cisc0503_dsa.BST.BST.calcMaxAndy">calcMaxAndy</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.calcMinAndy" href="#cisc0503_dsa.BST.BST.calcMinAndy">calcMinAndy</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.clear" href="#cisc0503_dsa.BST.BST.clear">clear</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.computeOneChildNodesAndy" href="#cisc0503_dsa.BST.BST.computeOneChildNodesAndy">computeOneChildNodesAndy</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.countNodesAndy" href="#cisc0503_dsa.BST.BST.countNodesAndy">countNodesAndy</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.createNewNode" href="#cisc0503_dsa.BST.BST.createNewNode">createNewNode</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.delete" href="#cisc0503_dsa.BST.BST.delete">delete</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.deleteAllNodesAndy" href="#cisc0503_dsa.BST.BST.deleteAllNodesAndy">deleteAllNodesAndy</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.display" href="#cisc0503_dsa.BST.BST.display">display</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.getSize" href="#cisc0503_dsa.BST.BST.getSize">getSize</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.inorder" href="#cisc0503_dsa.BST.BST.inorder">inorder</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.inorderHelper" href="#cisc0503_dsa.BST.BST.inorderHelper">inorderHelper</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.insert" href="#cisc0503_dsa.BST.BST.insert">insert</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.isEmpty" href="#cisc0503_dsa.BST.BST.isEmpty">isEmpty</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.leafCountAndy" href="#cisc0503_dsa.BST.BST.leafCountAndy">leafCountAndy</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.postorder" href="#cisc0503_dsa.BST.BST.postorder">postorder</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.postorderHelper" href="#cisc0503_dsa.BST.BST.postorderHelper">postorderHelper</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.preorder" href="#cisc0503_dsa.BST.BST.preorder">preorder</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.preorderHelper" href="#cisc0503_dsa.BST.BST.preorderHelper">preorderHelper</a></code></li>
+<li><code><a title="cisc0503_dsa.BST.BST.search" href="#cisc0503_dsa.BST.BST.search">search</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="cisc0503_dsa.BST.TreeNode" href="#cisc0503_dsa.BST.TreeNode">TreeNode</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

@@ -6,3 +6,5 @@ from .queue import Queue
 from .linked_list import LinkedList, DoublyLinkedList
 
 from .postfix import infix_to_postfix, postfix_eval
+
+from .BST import BST
