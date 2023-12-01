@@ -6,7 +6,7 @@ import re
 def clean_coverage_files(directory):
     # Regex pattern to match the filenames
     pattern = re.compile(r'd_[0-9a-zA-Z]{16}_')
-    timestamp_pattern = re.compile(r'created at \d{4}-\d{2}-\d{2} \d{2}:\d{2} [-+]\d{4}')
+    timestamp_pattern = re.compile(r'(,\s*)?created at \d{4}-\d{2}-\d{2} \d{2}:\d{2} [-+]\d{4}\s*', re.DOTALL)
     timestamp_tag_pattern = re.compile(r'<p id="timestamp">.*?</p>')
 
     # Get the current timestamp
