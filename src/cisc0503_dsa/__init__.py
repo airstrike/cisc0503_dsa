@@ -8,3 +8,5 @@ from .linked_list import LinkedList, DoublyLinkedList
 from .postfix import infix_to_postfix, postfix_eval
 
 from .BST import BST
+
+from .quick_sort import quickSort, _quickSort, medianOfThree, partition, partitionSimple, quickSortIterative
