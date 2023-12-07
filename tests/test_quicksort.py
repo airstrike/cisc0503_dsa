@@ -39,7 +39,7 @@ class QuickSortMain(unittest.TestCase):
                 quickSort(a, simple=boolean, verbose=True)
                 self.assertEqual(a, sorted(b))
 
-    def test_zquickSortNonRecursive(self):
+    def test_quickSortNonRecursive(self):
         lst = [9, 7, 3, 1, 2, 8, 4, 6, 5]
         orig = lst.copy()
         recurse = lst.copy()

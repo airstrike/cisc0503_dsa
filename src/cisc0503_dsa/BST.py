@@ -1,4 +1,4 @@
-#Binary Search Tree
+#Binary Search Tree (assignment 06 version)
 class TreeNode:
     def __init__(self, e):
         self.element = e
@@ -96,7 +96,7 @@ class BST:
 
     # Insert element e into the binary search tree
     # Return True if the element is inserted successfully 
-    def insert(self, e):
+    def insertWithLoop(self, e):
         if self.root == None:
             self.root = self.createNewNode(e) # Create a new root
         else:
@@ -119,11 +119,32 @@ class BST:
             else:
                 parent.right = self.createNewNode(e)
 
-        self.size += 1 # Increase tree size
         return True # Element inserted
+
+    # Same as insertWithWhile, but using recursion
+    def insert(self, e):
+        if self.root == None:
+            self.root = self.createNewNode(e)
+        else:
+            return self._insert(e, self.root)
+
+    def _insert(self, e, node):
+        if e < node.element:
+            if node.left is None:
+                node.left = self.createNewNode(e)
+            else:
+                return self._insert(e, node.left)
+        elif e > node.element:
+            if node.right is None:
+                node.right = self.createNewNode(e)
+            else:
+                return self._insert(e, node.right)
+        else:
+            return False
 
     # Create a new TreeNode for element e
     def createNewNode(self, e):
+        self.size += 1
         return TreeNode(e)
 
     # Return the size of the tree
@@ -169,7 +190,7 @@ class BST:
     # Delete an element from the binary search tree.
     # Return True if the element is deleted successfully
     # Return False if the element is not in the tree 
-    def delete(self, e):
+    def deleteWithLoop(self, e):
         # Locate the node to be deleted and its parent node
         parent = None
         current = self.root
@@ -220,6 +241,74 @@ class BST:
         self.size -= 1
         return True # Element deleted
 
+    # Same as deleteWithLoop, but using recursion
+    def delete(self, e):
+        if self.root == None:
+            return False
+        else:
+            return self._delete(e, self.root, None)
+        
+    def _delete(self, e, current, parent):
+        if e < current.element:
+            if current.left is None:
+                return False
+            else:
+                return self._delete(e, current.left, current)
+        elif e > current.element:
+            if current.right is None:
+                return False
+            else:
+                return self._delete(e, current.right, current)
+        else: # We have found the element
+
+            # Case 1: The current node has no left children
+            if current.left is None:
+                # Connect the parent with the right child of the current node
+                if parent is None:
+                    self.root = current.right
+                    self.size -= 1
+                    return True
+                else:
+                    if e < parent.element:
+                        parent.left = current.right
+                    else:
+                        parent.right = current.right
+
+            # Case 2: The current node has a left child
+            # Then locate the rightmost node in the left subtree of
+            # the current node and also its parent, again using recursion
+            else:
+                # Replace current element with the rightmost element in left subtree
+                current.element = self._deleteRightmost(current, current.left)
+            self.size -= 1
+            return True
+
+    def _deleteRightmost(self, parent, current):
+        if current.right is not None:
+            return self._deleteRightmost(current, current.right)
+        else:
+            if parent.right == current:
+                parent.right = current.left
+            else:
+                parent.left = current.left
+            return current.element
+
+    # Find element using recursion and return True if the element is found, False otherwise
+    def find(self, e):
+        if self.root is None:
+            return False
+        return self._find(e, self.root)
+
+    def _find(self, e, current):
+        if current is None:
+            return False  # Element is not found
+        elif e == current.element:
+            return True  # Element is found
+        elif e < current.element:
+            return self._find(e, current.left)  # Search in the left subtree
+        else:
+            return self._find(e, current.right)  # Search in the right subtree
+                
     # Return true if the tree is empty
     def isEmpty(self):
         return self.size == 0

@@ -10,20 +10,15 @@ try:
      from cisc0503_dsa import BST
 except ImportError: # pragma: no cover
      try:
-          from .BST import BST # type: ignore # pragma: no cover
+          from BST import BST # type: ignore # pragma: no cover
      except ImportError:
           raise ImportError("Could not find BST.py in src or current directory.")
 
 class BSTMain(unittest.TestCase):
      def setUp(self):
           self.tree = BST()
-          self.tree.insert("George")
-          self.tree.insert("Michael")
-          self.tree.insert("Tom")
-          self.tree.insert("Adam")
-          self.tree.insert("Jones")
-          self.tree.insert("Peter") # Insert Peter to tree
-          self.tree.insert("Daniel")
+          for e in ["George", "Michael", "Tom", "Adam", "Jones", "Peter", "Daniel"]:
+               self.tree.insert(e)
 
           self.intTree = BST()
           for e in [2, 4, 3, 1, 8, 5, 6, 7]:
@@ -114,7 +109,7 @@ class BSTMain(unittest.TestCase):
 
      def test_cannotInsertDuplicate(self):
           self.assertFalse(self.tree.insert("Peter"))
-          self.assertFalse(self.intTree.insert(1))
+          self.assertFalse(self.intTree.insertWithLoop(1))
 
      def test_clear(self):
           self.tree.clear()
@@ -124,14 +119,89 @@ class BSTMain(unittest.TestCase):
 
      def test_delete(self):
           self.assertTrue(self.tree.delete("Peter"))
-          self.assertTrue(self.intTree.delete(1))
+          self.assertTrue(self.intTree.deleteWithLoop(1))
           self.assertFalse(self.tree.search("Peter"))
           self.assertFalse(self.intTree.search(1))
 
           self.assertTrue(self.tree.delete("George"))
-          self.assertTrue(self.intTree.delete(7))
+          self.assertTrue(self.intTree.deleteWithLoop(7))
 
           self.assertFalse(BST().delete("George"))
+
+     def test_deleteWithLoop(self):
+          self.assertTrue(self.tree.deleteWithLoop("Peter"))
+          self.assertTrue(self.intTree.deleteWithLoop(1))
+          self.assertFalse(self.tree.search("Peter"))
+          self.assertFalse(self.intTree.search(1))
+
+          self.assertTrue(self.tree.deleteWithLoop("George"))
+          self.assertTrue(self.intTree.deleteWithLoop(7))
+
+          self.assertFalse(BST().deleteWithLoop("George"))
+
+          tree = BST()
+          tree.insert(1)
+          tree.insert(5)
+          tree.insert(3)
+          tree.insert(9)
+          for i in [5, 3, 1, 9]:
+               self.assertTrue(tree.deleteWithLoop(i))
+               self.assertFalse(tree.deleteWithLoop(2))
+               self.assertFalse(tree.deleteWithLoop(10))
+          self.assertFalse(BST().deleteWithLoop("George"))
+
+          tree = BST()
+          tree.insert(1)
+          tree.insert(5)
+          tree.insert(3)
+          tree.insert(9)
+          for i in [5, 3, 1, 9]:
+               self.assertTrue(tree.delete(i))
+               self.assertFalse(tree.delete(2))
+               self.assertFalse(tree.delete(10))
+
+     def test_find(self):
+          self.assertTrue(self.tree.find("Peter"))
+          self.assertTrue(self.intTree.find(1))
+          self.assertFalse(self.tree.find("Andy"))
+          self.assertFalse(self.intTree.find(9))
+          self.assertFalse(BST().find("Empty Tree"))
+
+     def test_compare_inserts(self):
+          self.treeCopy = BST()
+          for e in ["George", "Michael", "Tom", "Adam", "Jones", "Peter", "Daniel"]:
+               self.treeCopy.insertWithLoop(e)
+
+          self.intTreeCopy = BST()
+          for e in [2, 4, 3, 1, 8, 5, 6, 7]:
+               self.intTreeCopy.insertWithLoop(e)
+
+          for (a, b) in [(self.tree, self.treeCopy), (self.intTree, self.intTreeCopy)]:
+               i = a.root.right.left.element
+               j = b.root.right.left.element
+
+               self.assertEqual(i, j)
+
+     def test_compare_deletes(self):
+          self.treeCopy = BST()
+          for e in ["George", "Michael", "Tom", "Adam", "Jones", "Peter", "Daniel"]:
+               self.treeCopy.insert(e)
+
+          self.intTreeCopy = BST()
+          for e in [2, 4, 3, 1, 8, 5, 6, 7]:
+               self.intTreeCopy.insert(e)
+
+          for (a, b) in [(self.tree, self.treeCopy), (self.intTree, self.intTreeCopy)]:
+               i = a.root.right.left.element
+               j = b.root.right.left.element
+
+               self.assertEqual(i, j) # we are testing the same element
+               self.assertEqual(a.delete(i), b.deleteWithLoop(j))
+               self.assertEqual(a.root.element, b.root.element)
+               self.assertEqual(a.countNodesAndy(), b.countNodesAndy())
+               self.assertEqual(a.isEmpty(), b.isEmpty())
+               self.assertEqual(a.computeOneChildNodesAndy(), b.computeOneChildNodesAndy())
+          
 
 
 if __name__ == "__main__": # pragma: no cover
